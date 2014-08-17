@@ -123,9 +123,19 @@ MEDIA QUERIES
       var tosend = 'http://translate.google.com/translate_tts?tl=es&q=' + el.value ;
 
 
-          document.all.mediaplayer.innerHTML = '<EMBED SRC="' + tosend + '" HIDDEN=true AUTOSTART=true LOOP=false>';
+          //document.all.mediaplayer.innerHTML = '<EMBED SRC="' + tosend + '" HIDDEN=true AUTOSTART=true LOOP=false>';
 
-         //document.all.mediaplayer.innerHTML = '<EMBED SRC="' + mp3_file + '" HIDDEN=true AUTOSTART=true LOOP=false>';
+       var audio = document.createElement("audio");
+if (audio != null && audio.canPlayType && audio.canPlayType("audio/mpeg"))
+{
+   audio.src = tosend ;
+   audio.play();
+
+}
+
+
+
+
      }
 </script>
 
@@ -157,7 +167,7 @@ href="http://www.cssblog.es/crear-diseno-responsive-en-3-pasos/">artículo.</A>)
 
 <H2>Contenido</H2>
 <P>texto</P>
-<img src='jm2.png' />
+<img src='http://www.jm2.com.ar/jm2.png' />
 
 <div>
                     <label for="texttotransalte"> To Transalte:  </label>
@@ -168,10 +178,20 @@ href="http://www.cssblog.es/crear-diseno-responsive-en-3-pasos/">artículo.</A>)
            
 <div>
 <input type="button" onclick="reproducir('http://translate.google.com/translate_tts?tl=es&q=J m 2 Soluciones Informaticas')" value="Translate"/>
-
-
-
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <P>texto</P></DIV>
 <DIV id="sidebar">
