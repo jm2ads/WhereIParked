@@ -57,8 +57,11 @@ MEDIA QUERIES
 	#pagewrap {
 		width: 94%;
 	}
-	#content {
+	#content 
+	{
+	      background-color:Black;
 		width: 65%;
+	
 	}
 	#sidebar {
 		width: 30%;
@@ -70,7 +73,7 @@ MEDIA QUERIES
 @media screen and (max-width: 640px) {
 
 	#content {
-		background: #EEEEEE;
+		background: #000000;
 		width: auto;
 		float: none;
 	}
@@ -101,7 +104,7 @@ MEDIA QUERIES
 	background: #f8f8f8;
 }
 #sidebar {
-	background: #f0efef;
+	background: #000000;
 }
 #header, #content, #sidebar {
 	margin-bottom: 5px;
@@ -114,40 +117,47 @@ MEDIA QUERIES
     </STYLE>
 
 
- <script type="text/javascript">
-     function reproducir(mp3_file) {
-         var el = document.getElementById('texttotransalte');
-     if(el.value=='')
-         var tosend = 'http://translate.google.com/translate_tts?tl=es&q=Debe ingresar un texto ';
-         else
-      var tosend = 'http://translate.google.com/translate_tts?tl=es&q=' + el.value ;
+<script type="text/javascript">
+    function translate() {
+        document.getElementById('translate_to').innerHTML = "";
+        var text = document.getElementById('translate_from').value;
+        window.mycallback = function (response) {
+            document.getElementById('translate_to').innerHTML = response;
+
+            ///////////////////////// Google Begin///////////////////////////////
+            var format = "audio/mp3";
+            var tosend = 'http://translate.google.com/translate_tts?tl=' + languageTo + '&q=' + document.getElementById('translate_to').value;
+            //        var tosend = "http://api.microsofttranslator.com/V2/Ajax.svc/Speak?oncomplete=mycallback&appId=68D088969D79A8B23AF8585CC83EBA2A05A97651&text=" + text + "&language=" + languageTo + "&format=" + format;
+            //       
+            var audio = document.createElement("audio");
+            if (audio != null && audio.canPlayType && audio.canPlayType("audio/mpeg")) {
+                audio.src = tosend;
+                audio.play();
+                ///////////////////////// Google End///////////////////////////////
+            }
+        }
+
+        var languageFrom = document.getElementById("langpairFROM").value;
+        var languageTo = document.getElementById("langpairTO").value;
+
+        var s = document.createElement("script");
+        s.src = "http://api.microsofttranslator.com/V2/Ajax.svc/Translate?oncomplete=mycallback&appId=68D088969D79A8B23AF8585CC83EBA2A05A97651&from=" + languageFrom + "&to=" + languageTo + "&text=" + text;
+        document.getElementsByTagName("head")[0].appendChild(s);
 
 
-          //document.all.mediaplayer.innerHTML = '<EMBED SRC="' + tosend + '" HIDDEN=true AUTOSTART=true LOOP=false>';
-
-       var audio = document.createElement("audio");
-if (audio != null && audio.canPlayType && audio.canPlayType("audio/mpeg"))
-{
-   audio.src = tosend ;
-   audio.play();
-
-}
 
 
 
 
-     }
+
+
+
+
+    }
 </script>
 
-
-
 <META name="GENERATOR" content="MSHTML 11.00.9600.16428">
-    <style type="text/css">
-        #texttotransalte
-        {
-            width: 421px;
-        }
-    </style>
+   
 </HEAD> 
 <BODY>
 <div id='mediaplayer' name='mediaplayer'    > </div>
@@ -155,43 +165,51 @@ if (audio != null && audio.canPlayType && audio.canPlayType("audio/mpeg"))
 <DIV id="pagewrap">
 <DIV id="header">
 <H1>Header</H1>
-<P>Version 1.1.1.1</P></DIV>
+<P>Version 2.3.4.1</P>
+<P><img src='http://www.jm2.com.ar/jm2.png' width="50%" /></P>
+
+</DIV>
 
 
 
  
-<DIV id="content" >
+<DIV id="content"  style="background-color:#cccccc">
 	
 
 <H2>Contenido</H2>
-<P>texto</P>
-<img src='http://www.jm2.com.ar/jm2.png' />
 
+<form action="javascript:translate()">
 <div>
-                    <label for="texttotransalte"> To Transalte:  </label>
-                    <input type="text" id="texttotransalte" value= 'J m 2 Soluciones Informaticas ' name="texttotransalte"/>
-
-                  
+<select id="langpairFROM" style=" font-size :14pt;width:30%"   >
+  <option value="de" >German</option>
+  <option value="en" >English</option>
+  <option value="ru">Russian</option>      
+  <option value="uk">Ukrainian</option>   
+   <option value="es" selected>Spanish</option>                                     
+</select>
+<select id="langpairTO" style=" font-size :14pt;width:30%" >
+  <option value="ru">Russian</option>
+  <option value="de" >German</option>
+  <option value="en" selected>English</option>  
+  <option value="uk">Ukrainian</option>
+    <option value="es">Spanish</option>  
+</select>
+<button type="submit" style=" font-size :14pt;width:30%" >Translate</button> 
 </div>
-           
-<div>
-<input type="button" onclick="reproducir('http://translate.google.com/translate_tts?tl=es&q=J m 2 Soluciones Informaticas')" value="Translate"/>
+
+<div >
+  <textarea id="translate_from" name="translate_from" style=" font-size :14pt;width:70%" > J m 2 Soluciones Informaticas </textarea> 
+</div>
+<div id="translationField">
+  <textarea id="translate_to" style=" font-size :14pt;width:70%" ></textarea> 
 </div>
 
+</form>
 
 
 
 
 
-
-
-
-
-
-
-
-
-<P>texto</P></DIV>
 <DIV id="sidebar">
 <H3>Sidebar</H3>
 <P>texto</P>
