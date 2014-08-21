@@ -5,7 +5,9 @@
  
 <META charset="utf-8"> <!-- viewport meta to reset iPhone inital scale --> 
 <META name="viewport" content="width=device-width, initial-scale=1.0"> 
-<TITLE>Demo: Crear diseño responsive en 3 pasos - CSSBlog ES</TITLE> <!-- css3-mediaqueries.js for IE8 or older --> <!--[if lt IE 9]>
+<TITLE>Demo: Crear diseño responsive en 3 pasos - CSSBlog ES</TITLE> <!-- css3-mediaqueries.js for IE8 or older --> <!--[if lt IE 9]>-->
+
+<SCRIPT src="jquery-1.7.1.min.js" type="text/javascript"></SCRIPT>
 	<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
 <![endif]--> 
 <STYLE type="text/css">
@@ -117,56 +119,75 @@ MEDIA QUERIES
     </STYLE>
 
 
-<script type="text/javascript">
-    function translate() {
-        document.getElementById('translate_to').innerHTML = "";
-        var text = document.getElementById('translate_from').value;
-        window.mycallback = function (response) {
-            document.getElementById('translate_to').innerHTML = response;
+<SCRIPT type="text/javascript">
+    var map;
+    var latitud;
+    var longitud;
+    var precision;
 
-            ///////////////////////// Google Begin///////////////////////////////
-            var format = "audio/mp3";
-            var tosend = 'http://translate.google.com/translate_tts?tl=' + languageTo + '&q=' + document.getElementById('translate_to').value;
-            //        var tosend = "http://api.microsofttranslator.com/V2/Ajax.svc/Speak?oncomplete=mycallback&appId=68D088969D79A8B23AF8585CC83EBA2A05A97651&text=" + text + "&language=" + languageTo + "&format=" + format;
-            //       
-            var audio = document.createElement("audio");
-            if (audio != null && audio.canPlayType && audio.canPlayType("audio/mpeg")) {
-                audio.src = tosend;
-                audio.play();
-                ///////////////////////// Google End///////////////////////////////
-            }
+
+    $(document).ready(function () {
+        document.getElementById("showmap").innerHTML = "Show Last (" + localStorage.getItem("latitud") + ";" + localStorage.getItem("longitud") + ")";
+    });
+
+
+   
+
+    function localizame() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(coordenadas, errores);
+           
+        } else {
+            alert('Oops! Tu navegador no soporta geolocalización. Bájate Chrome, que es gratis!');
         }
-
-        var languageFrom = document.getElementById("langpairFROM").value;
-        var languageTo = document.getElementById("langpairTO").value;
-
-        var s = document.createElement("script");
-        s.src = "http://api.microsofttranslator.com/V2/Ajax.svc/Translate?oncomplete=mycallback&appId=68D088969D79A8B23AF8585CC83EBA2A05A97651&from=" + languageFrom + "&to=" + languageTo + "&text=" + text;
-        document.getElementsByTagName("head")[0].appendChild(s);
-
-
-
-
-
-
-
-
-
-
     }
-</script>
 
+    function coordenadas(position) {
+
+        if (typeof (Storage) !== "undefined") {
+            latitud = position.coords.latitude;
+            longitud = position.coords.longitude;
+            precision = position.coords.accuracy;
+
+            localStorage.setItem("latitud", latitud);
+            localStorage.setItem("longitud", longitud);
+            localStorage.setItem("precision", precision);
+        } else {
+            alert('Sorry! No Web Storage support..!');
+         
+        }
+        
+    }
+
+    function errores(err) {
+        if (err.code == 0) {
+            alert("Oops! Algo ha salido mal");
+        }
+        if (err.code == 1) {
+            alert("Oops! No has aceptado compartir tu posición");
+        }
+        if (err.code == 2) {
+            alert("Oops! No se puede obtener la posición actual");
+        }
+        if (err.code == 3) {
+            alert("Oops! Hemos superado el tiempo de espera");
+        }
+    }
+
+   
+    </SCRIPT>
+
+    
 <META name="GENERATOR" content="MSHTML 11.00.9600.16428">
    
 </HEAD> 
 <BODY>
-<div id='mediaplayer' name='mediaplayer'    > </div>
-	<LINK href="style.css" rel="stylesheet"> 
+
 <DIV id="pagewrap">
 <DIV id="header">
-<H1>Header</H1>
+<H1>Where I Park?</H1>
 <P>Version 2.3.4.1</P>
-<P><img src='http://www.jm2.com.ar/jm2.png' width="50%" /></P>
+<P><img src='http://www.jm2.com.ar/jm2.png' width="30%" /></P>
 
 </DIV>
 
@@ -178,31 +199,26 @@ MEDIA QUERIES
 
 <H2>Contenido</H2>
 
-<form action="javascript:translate()">
+
+
+
+<form action="javascript:localizame()">
 <div>
-<select id="langpairFROM" style=" font-size :14pt;width:30%"   >
-  <option value="de" >German</option>
-  <option value="en" >English</option>
-  <option value="ru">Russian</option>      
-  <option value="uk">Ukrainian</option>   
-   <option value="es" selected>Spanish</option>                                     
-</select>
-<select id="langpairTO" style=" font-size :14pt;width:30%" >
-  <option value="ru">Russian</option>
-  <option value="de" >German</option>
-  <option value="en" selected>English</option>  
-  <option value="uk">Ukrainian</option>
-    <option value="es">Spanish</option>  
-</select>
-<button type="submit" style=" font-size :14pt;width:30%" >Translate</button> 
+&nbsp;
+<button type="submit" style=" font-size :14pt;width:95%" >Get Localization</button> 
+</div>
+<div>
+&nbsp;
+<button type="button" id="showmap" name="showmap"    onclick ="javascript:location.href = 'Localizador.htm'" style=" font-size :14pt;width:95%" >No Localization</button> 
 </div>
 
+
+
+
 <div >
-  <textarea id="translate_from" name="translate_from" style=" font-size :14pt;width:70%" > J m 2 Soluciones Informaticas </textarea> 
-</div>
+  &nbsp;</div>
 <div id="translationField">
-  <textarea id="translate_to" style=" font-size :14pt;width:70%" ></textarea> 
-</div>
+  &nbsp;</div>
 
 </form>
 
@@ -214,5 +230,7 @@ MEDIA QUERIES
 <H3>Sidebar</H3>
 <P>texto</P>
 <P>texto</P></DIV>
+
 <DIV id="footer">
-<H4>Footer</H4></DIV></DIV></BODY></HTML>
+
+<H4>www.jm2.com.ar</H4></DIV></DIV></BODY></HTML>
