@@ -14,7 +14,7 @@ http-equiv="X-UA-Compatible">
  
 <META name="GENERATOR" content="MSHTML 11.00.9600.17239"></HEAD> 
 <BODY><HEADER>
-<H1>Localizador mediante HTML5</H1></HEADER><SECTION><ARTICLE>
+<H1>Where I Park? - Map</H1></HEADER><SECTION><ARTICLE>
 <DIV id="map_canvas" style="width: 100%; height: 400px;"></DIV></ARTICLE>
 <DIV id="respuesta"></DIV></SECTION>
 <!--<SCRIPT src="Localizador_files/js.js" type="text/javascript"></SCRIPT>-->
@@ -85,7 +85,7 @@ http-equiv="X-UA-Compatible">
         
 
 
-            var coorMarcador2 = new google.maps.LatLng(parseFloat(localStorage.getItem("latitud"))-1, parseFloat(localStorage.getItem("longitud"))-1);
+            var coorMarcador2 = new google.maps.LatLng(parseFloat(localStorage.getItem("latitud")), parseFloat(localStorage.getItem("longitud")));
             //var coorMarcador2 = new google.maps.LatLng(-34.587520, -58.672520);
 
             var marcador2 = new google.maps.Marker({
@@ -111,10 +111,10 @@ http-equiv="X-UA-Compatible">
      <form action="index.htm" method="post" >
          <div>
 
- <label id="distancia" name="distancia"> </label>
+ <label id="distancia" > </label>
 </div>
 <div>
-<button type="button" style=" font-size :14pt;width:95%" onclick="javascript:location.href = 'index.htm'"  >Volver</button> 
+<button type="button" style=" font-size :14pt;width:95%" onclick="javascript:window.location.href = 'index.htm'"  >Volver</button> 
 </div>
 
 
