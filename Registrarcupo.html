@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<head>
+  <title>ACT Truck</title>
+<meta charset=”UTF-8″ />
+<meta http-equiv="X-UA-Compatible" content="IE=9; />
+<link rel="shortcut icon" href="images/act-seal-logo1.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- <link rel="stylesheet" type="text/css" href="css/searcher.css"> -->
+<link rel="stylesheet" type="text/css" href="css/stylosmobile.css">
+   <script src="Scripts/jquery.min.js"></script>
+
+<script type="text/javascript">
+		
+		
+		
+		
+	</script>
+      <script type="text/javascript" language="javascript">
+          function PedirCupo(oCodigoIn, oPatenteIn) {
+
+              if (oCodigoIn == null || oCodigoIn.length == 0 || /^\s+$/.test(oCodigoIn)) {
+                  alert("Debe poner algun Valor en el Codigo");
+                  return;
+              }
+              if (oPatenteIn == null || oPatenteIn.length == 0 || /^\s+$/.test(oPatenteIn)) {
+                  alert("Debe poner algun Valor en la Patente");
+                  return;
+              }
+
+              var OldPattern = /^[a-z]{3}[0-9]{3}$/;
+              var NewPattern = /^[a-z]{2}[0-9]{3}[a-z]{2}$/;
+              if (!OldPattern.test(oPatenteIn) && !NewPattern.test(oPatenteIn))
+                             alert('La patente ingresada no es Valida');
+
+            
+          
+
+              //            for (var i = 0; i < oCodigoIn.length; i++) {
+
+              //                var valor = oCodigoIn.substring(i, i + 1);
+
+              //                if (!isNaN(valor)) {
+              //                    alert("Numero:" + valor);
+              //                }
+              //                else {
+              //                    alert("Letra:" + valor);
+              //                }
+              //            }
+
+
+              //            alert("Busca Solo UnoX" + oCodigoIn);
+
+
+
+
+              $('#output').html($("#txtname").val());
+              // Add the page method call as an onclick handler for the div.
+              var mydata = {
+                  oCodigo: oCodigoIn,
+                  oPatente: oPatenteIn
+              }
+              alert(JSON.stringify(mydata));
+              //var ourl = "http://localhost:64858/Controller.aspx/TBLCUPOSNOMINADOS_GET_BY_CODIGO_Json";
+              //url: "http://localhost/CuposCamiones/CupoCamiones.asmx/TBLCUPOSNOMINADOS_GET_BY_CODIGO_Json",
+              //var ourl = "http://localhost:64858/Controller.aspx/AsignarCupoCamion";
+              var ourl = "http://www.toepfer.com.ar/merws/Controller.aspx/AsignarCupoCamion";
+              $.ajax({
+
+
+                  url: ourl,
+
+                  type: "POST",
+                  contentType: "application/json; charset=utf-8",
+                  dataType: "json",
+                  //data: "{}",
+                  //data: "{ oCodigo: " + oCodigoIn + " }",
+
+                  data: JSON.stringify(mydata),
+
+                  success:
+                                         function (data, textStatus, XMLHttpRequest) {
+                                             alert("data.dddd" + data.d);
+                                             $('#output').html(data.d);
+
+                                             $("#contenido").html('');
+
+                                             /* Vemos que la respuesta no este vacía y sea una arreglo */
+
+                                             // if(data != null && $.isArray(data)){
+                                             if (data != null) {
+
+
+                                                 //var json = $.parseJSON(data.d);
+                                                 var json = JSON.parse(data.d);
+                                                 alert("json" + json.CODIGO);
+                                                 $("#contenido").append("<tr><td>" + json.CODIGO + "</td><td>" + json.FECHACUPO + "</td><td>" + json.PUERTO + "</td></tr>");
+
+                                                 alert("typeof (Storage) :" + typeof (Storage));
+                                                 if (typeof (Storage) !== "undefined") {
+                                                     alert("!==  : 1");
+                                                     localStorage.setItem("CODIGO", json.CODIGO);
+                                                     localStorage.setItem("FECHACUPO", json.FECHACUPO);
+                                                     localStorage.setItem("PUERTO", json.PUERTO);
+                                                     localStorage.setItem("PATENTE", json.PATENTE);
+                                                     alert("!==  : 2");
+                                                  
+                                                     window.setTimeout(function () { window.location = "LiberarCupo.html"; }, 3000);
+
+                                                 } else {
+                                                     alert('Sorry! No Web Storage support..!');
+
+                                                 }
+
+
+
+                                             }
+                                             else {
+                                                 alert('data null');
+
+                                             }
+
+
+                                         },
+
+                  failure: function (XMLHttpRequest, textStatus, errorThrown) {
+                      alert(textStatus);
+                  }
+
+              });
+          }
+
+         
+
+       
+
+
+
+          
+
+
+    </script>
+
+
+</head>
+<body >
+	<div id="logodiv" class="logo-center">
+		<img width="121" height="23" src="images/act-logo-small.png" alt="Toepfer">
+	</div>	
+	<hr id="mainStatusLine" class="fade" />	
+
+	<div id="controles" class="control-center">		
+		<form name="frmSel" method="post"  id="searchfilter" autocomplete="off">
+			<input required inputmode="numeric" class="input-cupo" maxlength="10" id="txtCupo" type="text" name="txtCupo" placeholder="C&oacute;digo de Cupo" />							
+			<input required inputmode="verbatim" class="input-cupo" maxlength="10" id="txtPatente" type="text" name="txtPatente" placeholder="Patente" />		
+			<button class="main-menu-item" maxlength="10" type="button" class="inputstatus"  onclick="PedirCupo(txtCupo.value, txtPatente.value)"  value="REGISTRAR">REGISTRAR</button>
+		</form>
+	</div>
+</body>
+</html>
