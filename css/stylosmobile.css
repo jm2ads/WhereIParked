@@ -1,0 +1,170 @@
+@import url("searcher.css");
+@import url('ActisaIntra-1.css');
+@import url('txtstyle.css');
+	
+	body {background: white!important;
+			
+			}
+	input{width:100%;}
+   	hr {height: 1px; color: #555 ; }
+	
+	a {
+			text-decoration: none;
+			}
+	
+	ul {
+			list-style: none outside none;
+			width: 100%;
+			margin-left: -30px;
+			}
+	li {
+			text-decoration: none;
+			text-transform: uppercase;		
+			}
+
+	.li-titulo {
+			color: #666666;
+			font-size: 0.75em; 
+			padding-bottom: 2px;
+			}
+	.li-valor {
+			font-weight: bold;				
+			padding-bottom: 10px;
+			text-align: center;
+			font-family: Verdana, Arial, Helvetica;
+			}
+	.input-cupo {
+			height: 2em;
+			text-align: center;
+			margin-bottom: 5px;
+			width:100%;
+			display:inline-block;
+			padding-bottom:3px;
+				}
+	.fade {			
+			visibility: visible;
+			opacity: 0;
+			transition: opacity 1s linear, padding 1s ease;
+			-moz-transition: opacity 1s linear, padding 1s ease;
+			-webkit-transition: opacity 1s linear, padding 1s ease;
+		   }	
+	.logo-center  img{				
+			display: inherit;
+			margin: auto;
+		}
+	.logo-pos{		
+			padding-top:50%;
+			}
+			.logo-pos img{			
+			display: inherit;
+			margin: auto;
+			}
+	.control-center {				
+			width: 175px;
+			height: 120px;
+			margin: auto;
+			padding-top: 4%;
+			left: 0; right: 0; 	
+			position: absolute;
+			top: 5em;			
+		}
+	.resumen-center {		
+			width: 220px;
+			margin: auto;
+			padding-top: 10px;
+			left: 0; right: 0;
+			position: absolute;			
+			top: 2em;
+			border: 1px solid #555;	
+			margin-top:4em;
+			border-radius:	6px 6px 6px 6px;	
+			-webkit-box-shadow: 3px 3px 0px 0px #ccc;			
+			-moz-box-shadow	  : 3px 3px 0px 0px #ccc;			
+			box-shadow		  : 3px 3px 0px 0px #ccc;	
+			margin-bottom:10px;
+			
+		}
+	#mainStatusLine {
+			width : 90%;
+			left: 0;
+		}
+		
+		/*----------RESPONSIVE----------*/ 
+@media screen and 	( max-device-width :260px ) {
+		
+	input[type="text"]{width:100%;}
+		
+	.logo-center  img{					
+			position:relative;
+			margin: auto;
+			display:inherit;
+		}		
+	#mainStatusLine {
+			width : 90%;
+			left: 0;
+		}	
+
+	.control-center {				
+			width: 175px;
+			height: 120px;
+			margin: auto;
+			padding-top: 40px;
+			left: 0; right: 0; 	
+			position: fixed;
+			top: 4em;			
+		}
+	hr {
+			border: 0; height: 1px;background-color:#555 ;
+			width:90%!important;
+			}
+	a {
+			text-decoration: none;
+		}
+
+    .fade {			
+			visibility: visible;
+			opacity: 0;
+			transition: opacity 1.25s linear, padding 1.25s ease;
+			-moz-transition: opacity 1.25s linear, padding 1.25s ease;
+			-webkit-transition: opacity 1.25s linear, padding 1.25s ease;
+		   }	
+
+	.menu-general{
+			border:1px solid;
+			height:100px;
+			margin: 0 auto;
+			}
+	.menu-container {
+			left: 0; right: 0;
+			position: absolute;			
+			margin: 0 auto;
+		}
+	.main-menu {
+			font-size:1.5em;
+			text-align:center;
+		}
+		
+	.main-menu-item {
+			-moz-box-shadow:inset 0px 1px 0px 0px #2A7254;
+			background-color:#2a7254;
+			border:1px solid ;
+			display:inline-block;
+			cursor:pointer;
+			color:#ffffff;
+			font-family:Arial, Helvetica;
+			font-size:1em;
+			text-decoration:none;
+			list-style:none;
+			height: 2em;
+			font-size: 1em;
+			margin-left:2px!important;
+		}
+}	
+/* index STILOS */
+
+
+
+
+
+
+

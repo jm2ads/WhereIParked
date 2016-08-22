@@ -1,0 +1,53 @@
+img {
+		display: block;
+		margin: auto;
+		width: 100%;
+	}
+
+	a {
+		text-decoration: none;
+	}
+	
+    .fade {			
+			visibility: visible;
+			opacity: 0;
+			transition: opacity 1.25s linear, height 1s ease;
+			-moz-transition: opacity 1.25s linear, height 1s ease;
+			-webkit-transition: opacity 1.25s linear, height 1s ease;
+		   }	
+
+	.logo-center {					
+			width: 121px;
+			height: 23px;
+			overflow: auto;
+			margin: auto;
+			position: absolute;
+			top: 0; left: 0; right: 0;  bottom: 0;
+		}
+		#mainStatusLine {
+			width : 90%;
+			left: 0;
+		}
+	#logoimg {				
+			background-image: url("images/act-logo-small.png");	
+			background-repeat: no-repeat;				
+			width: 100%; /*or your image's width*/
+			height: 100%; /*or your image's height*/	
+			position: relative;			
+		}	
+		.logo-pos{		
+			padding-top:50%;
+			}
+			.logo-pos img {			
+			display: inherit;
+			margin: auto;
+			}
+			@media all and (orientation:landscape) {
+			.logo-pos{		
+			padding-top: 20%!important;
+			}
+			.logo-pos img{			
+			display: inherit;
+			margin: auto;
+			}
+		}
