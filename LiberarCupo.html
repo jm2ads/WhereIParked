@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ACT Truck</title>
+
+<meta charset=”UTF-8″ />
+
+<link rel="shortcut icon" href="images/act-seal-logo1.png" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!-- <link rel="stylesheet" type="text/css" href="css/searcher.css"> -->
+
+<link rel="stylesheet" type="text/css" href="css/stylosmobile.css">
+  <script src="Scripts/jquery.min.js"></script>
+<head>
+<body>
+  <script type="text/javascript">
+		
+		
+	
+		
+		function bodyonload() {					
+		
+			//Aca se verifica si ya se tiene asociado un cupo o se permite al usuario asociar su patente.
+			var patente = localStorage.getItem("PATENTE");
+			var dsPuerto = localStorage.getItem("PUERTO");
+			var fechaCupo = localStorage.getItem("FECHACUPO");
+			var nroCupo = localStorage.getItem("CODIGO");
+			var dsEstado = "";
+			
+				//Tiene asociado un cupo				
+				document.getElementById("nroCupo").innerHTML=nroCupo;
+				document.getElementById("fechaCupo").innerHTML=fechaCupo;
+				document.getElementById("puerto").innerHTML=dsPuerto;
+				document.getElementById("patente").innerHTML=patente;
+				document.getElementById("txtCupo").value="";
+				document.getElementById("txtPatente").value="";
+
+}
+
+function LiberarCupo() {
+    alert("LiberarCupo");
+    //alert("LiberarCupo" + oCodigoIn);
+    localStorage.clear();
+    window.setTimeout(function () { window.location = "Registrarcupo.html"; }, 3000);
+}
+
+
+
+	</script>
+</head>
+<body onload="bodyonload()" >
+	<div id="logodiv" class="logo-center">
+		<img width="121" height="23" src="images/act-logo-small.png" alt="Toepfer">
+	</div>	
+	<hr id="mainStatusLine" class="fade" />	
+	<div id="resumen" class="resumen-center ">  		
+		<form name="frmSel" id="searchfilter" method="post" autocomplete="off">
+			<ul>
+				<li class="li-titulo">N&uacute;mero de Cupo</li>
+				<li class="li-valor"><div id="nroCupo"></div></li>
+				<li class="li-titulo">Fecha Cupo</li>
+				<li class="li-valor"><div id="fechaCupo"></div></li>
+				<li class="li-titulo">Planta</li>
+				<li class="li-valor"><div id="puerto"></div></li>
+				<li class="li-titulo">Patente</li>				
+				<li class="li-valor"><div id="patente"></div></li>
+				
+			</ul>
+			<button  id="searchfilter" type="button" class="input-cupo" onclick="LiberarCupo(txtCupo.value)" value="LIBERAR CUPO">LIBERAR CUPO </button>
+			<input id="txtCupo" type="hidden" name="txtCupo"  />							
+			<input id="txtPatente" type="hidden" name="txtPatente"  />					
+		</form>
+	</div>
+	   </body>
+<html>

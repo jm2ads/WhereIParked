@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ACT Truck</title>
+  <meta name="viewport" content="user-scalable=no, initial-scale=1" />
+  <link rel="stylesheet" type="text/css" href="css/IndexStyle.css"></link>
+  <link rel="shortcut icon" href="images/act-seal-logo1.png" ></link>
+
+</head>
+	<body onload="bodyonload()">
+	<div id="logodiv" class="fade logo-center">
+		<img  width="121px" height="23px"  src="images/act-logo-small.png"  alt="toepfer"/>
+	</div>
+	<hr id="mainMenuLine" class="fade"> </hr>
+	<div class="menu-container">	
+		<ul id="mainMenu" class="main-menu fade"></ul>
+	</div>
+	<script type="text/javascript">
+		function showin(ref) {
+			document.getElementById(ref).style.opacity='1';			
+		}
+		function bodyonload() {					
+			showin("logodiv");
+			setTimeout(function(){ document.getElementById("logodiv").style.height = "96%"; }, 2000);
+			setTimeout(function(){ showin("mainMenuLine"); }, 3000);
+			setTimeout(function () { showin("mainMenu"); }, 3000);
+
+
+             if (localStorage == null) {
+                //se muestra el form para sociar un cupo nuevo.
+                 window.setTimeout(function () { window.location = "Registrarcupo.html"; }, 3000);
+            }
+            else {
+			            if (localStorage.getItem("CODIGO") == null) {
+			                //se muestra el form para sociar un cupo nuevo.
+			                window.setTimeout(function () { window.location = "Registrarcupo.html"; }, 3000);
+			            }
+			            else {
+			                window.setTimeout(function () { window.location = "LiberarCupo.html"; }, 3000);
+			            }
+
+			    }
+								
+		}
+	</script>
+	</body>
+</html>
