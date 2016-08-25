@@ -55,7 +55,7 @@
 
 
 
-              $('#output').html($("#txtname").val());
+          
               // Add the page method call as an onclick handler for the div.
               var mydata = {
                   oCodigo: oCodigoIn,
@@ -81,10 +81,10 @@
                   data: JSON.stringify(mydata),
 
                   success:
-                                         function (data, textStatus, XMLHttpRequest) {
+                               function (data, textStatus, XMLHttpRequest) {
+                                             alert("function" );
                                              alert("data.dddd" + data.d);
-                                             $('#output').html(data.d);
-
+                                            
                                              $("#contenido").html('');
 
                                              /* Vemos que la respuesta no este vacía y sea una arreglo */
