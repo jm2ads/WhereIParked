@@ -5,10 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9; />
 <link rel="shortcut icon" href="images/act-seal-logo1.png" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<!-- <link rel="stylesheet" type="text/css" href="css/searcher.css"> -->
-<link rel="stylesheet" type="text/css" href="css/stylosmobile.css">
-   <script src="Scripts/jquery.min.js"></script>
-
+<link rel="stylesheet" type="text/css" href="css/stylosmobile.css"/>
+<!--   <script type="text/javascript"  src="Scripts/jquery.min.js"></script>-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript">
 		
 		
@@ -29,8 +28,11 @@
 
               var OldPattern = /^[a-z]{3}[0-9]{3}$/;
               var NewPattern = /^[a-z]{2}[0-9]{3}[a-z]{2}$/;
-              if (!OldPattern.test(oPatenteIn) && !NewPattern.test(oPatenteIn))
-                             alert('La patente ingresada no es Valida');
+              if (!OldPattern.test(oPatenteIn.toString().trim()) && !NewPattern.test(oPatenteIn.toString().trim())) {
+                  alert('La patente ingresada no es Valida');
+                  return;
+              }
+                            
 
             
           
@@ -62,10 +64,9 @@
               alert(JSON.stringify(mydata));
               //var ourl = "http://localhost:64858/Controller.aspx/TBLCUPOSNOMINADOS_GET_BY_CODIGO_Json";
               //url: "http://localhost/CuposCamiones/CupoCamiones.asmx/TBLCUPOSNOMINADOS_GET_BY_CODIGO_Json",
-              //var ourl = "http://localhost:64858/Controller.aspx/AsignarCupoCamion";
-                  //var ourl = "http://www.toepfer.com.ar/merws/Controller.aspx/AsignarCupoCamion";
-                var ourl = "http://www.jm2.com.ar/controller.aspx/AsignarCupoCamion";
-              alert(ourl);
+             // var ourl = "http://localhost:64858/Controller.aspx/AsignarCupoCamion";
+              //ar ourl = "http://www.toepfer.com.ar/merws/Controller.aspx/AsignarCupoCamion";
+              var ourl = "http://www.jm2.com.ar/controller.aspx/AsignarCupoCamion";
               $.ajax({
 
 
