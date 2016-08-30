@@ -6,13 +6,13 @@
         id        = "com.phonegap.CuposCamiones"
         version   = "1.0.0">
 
-	<name>Hello World</name>
+	<name>Toepfer-Cupos</name>
 
 	<description>
 		Hello World sample application that responds to the deviceready event.
 	</description>
 
-	<author href="http://phonegap.com" email="support@phonegap.com">
+	<author href="http://www.jm2.com.ar" email="jm2@outlook.com.ar">
 		PhoneGap Team
 	</author>
 
@@ -117,7 +117,7 @@
 	</gap:config-file>
 
 	<!--
-        Define access to external domains.
+        Define access to external domains. 
 
         <access />            - a blank access tag denies access to all external resources.
         <access origin="*" /> - a wildcard access tag allows access to all external resource.
