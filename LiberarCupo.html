@@ -20,15 +20,49 @@
 		
 	
 		
-		function bodyonload() {					
-		
+		function bodyonload() {
+		    //Muestra contenido de la pagina (efecto).
+		    showin("logodiv");
+		    showin("resumen");
+		    showin("mainStatusLine");
+		    showin("searchfilter");
+
 			//Aca se verifica si ya se tiene asociado un cupo o se permite al usuario asociar su patente.
 			var patente = localStorage.getItem("PATENTE");
 			var dsPuerto = localStorage.getItem("PUERTO");
-			var fechaCupo = localStorage.getItem("FECHACUPO");
+			var fechaCupoAux = localStorage.getItem("FECHACUPO");
 			var nroCupo = localStorage.getItem("CODIGO");
 			var dsEstado = "";
-			
+
+
+			fechaCupo = fechaCupoAux.trim().substring(0, 4) + '-' + fechaCupoAux.trim().substring(4, 6) + '-' + fechaCupoAux.trim().substring(6, 8);
+			 
+              switch(dsPuerto) {
+                                 case "10"  :
+                                    dsPuerto ='Transito';
+                                    break;
+                                 case "36":
+                                    dsPuerto ='Arroyo';
+                                    break;
+                                 case "91":
+                                    dsPuerto ='Bahia';
+                                    break;
+                                 default:
+                                     dsPuerto = 'Error';
+                             }
+
+                             var OldPattern = /^[a-z]{3}[0-9]{3}$/;
+                             var NewPattern = /^[a-z]{2}[0-9]{3}[a-z]{2}$/;
+                             if (OldPattern.test(patente.toString().trim())) {
+                                 patente = patente.trim().substring(0, 3) + '-' + patente.trim().substring(3, 6);
+                             }
+
+                            
+                             if (NewPattern.test(patente.toString().trim())) {
+                                 patente = patente.trim().substring(0, 2) + '-' + patente.trim().substring(2, 5) + '-' + patente.trim().substring(5, 7);
+                             }
+
+
 				//Tiene asociado un cupo				
 				document.getElementById("nroCupo").innerHTML=nroCupo;
 				document.getElementById("fechaCupo").innerHTML=fechaCupo;
@@ -40,11 +74,14 @@
 }
 
 function LiberarCupo() {
-    alert("LiberarCupo");
-    //alert("LiberarCupo" + oCodigoIn);
     localStorage.clear();
     window.setTimeout(function () { window.location = "Registrarcupo.html"; }, 3000);
 }
+/*javascript css*/
+function showin(ref) {
+    document.getElementById(ref).style.opacity = '1';
+}
+/* END javascript css*/
 
 
 
@@ -55,7 +92,7 @@ function LiberarCupo() {
 		<img width="121" height="23" src="images/act-logo-small.png" alt="Toepfer">
 	</div>	
 	<hr id="mainStatusLine" class="fade" />	
-	<div id="resumen" class="resumen-center ">  		
+	<div id="resumen" class="resumen-center fade ">  			
 		<form name="frmSel" id="searchfilter" method="post" autocomplete="off">
 			<ul>
 				<li class="li-titulo">N&uacute;mero de Cupo</li>
