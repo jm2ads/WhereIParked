@@ -18,6 +18,9 @@
           function PedirCupo(oCodigoIn, oPatenteIn) {
 
               var puertocod = 0;
+              oCodigoIn = oCodigoIn.toUpperCase();
+              oPatenteIn = oPatenteIn.toUpperCase();
+           //   oPatenteIn = oPatenteIn.toUpperCase();
               if (oCodigoIn == null || oCodigoIn.trim().length == 0 || /^\s+$/.test(oCodigoIn.trim())) {
                   alert("Debe poner algun Valor en el Codigo");
                   return;
@@ -38,8 +41,8 @@
                   return;
               }
 
-              var OldPattern = /^[a-z]{3}[0-9]{3}$/;
-              var NewPattern = /^[a-z]{2}[0-9]{3}[a-z]{2}$/;
+              var OldPattern = /^[A-Z]{3}[0-9]{3}$/;
+              var NewPattern = /^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
               if (!OldPattern.test(oPatenteIn.toString().trim()) && !NewPattern.test(oPatenteIn.toString().trim())) {
                   alert('La patente ingresada no es Valida');
                   return;
