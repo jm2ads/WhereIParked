@@ -17,11 +17,23 @@
       <script type="text/javascript" language="javascript">
           function PedirCupo(oCodigoIn, oPatenteIn) {
 
-              if (oCodigoIn == null || oCodigoIn.length == 0 || /^\s+$/.test(oCodigoIn)) {
+              var puertocod = 0;
+              if (oCodigoIn == null || oCodigoIn.trim().length == 0 || /^\s+$/.test(oCodigoIn.trim())) {
                   alert("Debe poner algun Valor en el Codigo");
                   return;
               }
-              if (oPatenteIn == null || oPatenteIn.length == 0 || /^\s+$/.test(oPatenteIn)) {
+              if (oCodigoIn.trim().length != 9 && oCodigoIn.trim().length != 11 ) {
+                  alert("El codigo debe tener 9 u 11 digitos");
+                  return;
+              }
+
+
+
+           
+
+
+
+              if (oPatenteIn == null || oPatenteIn.trim().length == 0 || /^\s+$/.test(oPatenteIn.trim())) {
                   alert("Debe poner algun Valor en la Patente");
                   return;
               }
@@ -32,10 +44,25 @@
                   alert('La patente ingresada no es Valida');
                   return;
               }
-                            
 
-            
-          
+
+              if (oCodigoIn.trim().length == 9 ) {
+                  puertocod=91;
+              }
+              else {
+                  if (oCodigoIn.trim().substring(0, 1) != 'T' && oCodigoIn.trim().substring(0, 1) != 'A') 
+                                 {
+                                  alert("El Codigo no es valido");
+                                  return;
+                                  }
+                              else {
+                                          if (oCodigoIn.trim().substring(0, 1) == 'T' )
+                                              puertocod = 10;
+                                          if (oCodigoIn.trim().substring(0, 1) == 'A')
+                                              puertocod = 36;
+                                  }
+                             
+                   }
 
               //            for (var i = 0; i < oCodigoIn.length; i++) {
 
@@ -61,12 +88,12 @@
                   oCodigo: oCodigoIn,
                   oPatente: oPatenteIn
               }
-              alert(JSON.stringify(mydata));
+            //  alert(JSON.stringify(mydata));
               //var ourl = "http://localhost:64858/Controller.aspx/TBLCUPOSNOMINADOS_GET_BY_CODIGO_Json";
               //url: "http://localhost/CuposCamiones/CupoCamiones.asmx/TBLCUPOSNOMINADOS_GET_BY_CODIGO_Json",
-             // var ourl = "http://localhost:64858/Controller.aspx/AsignarCupoCamion";
-              //ar ourl = "http://www.toepfer.com.ar/merws/Controller.aspx/AsignarCupoCamion";
-              var ourl = "http://www.jm2.com.ar/controller.aspx/AsignarCupoCamion";
+              var ourl = "http://localhost:64858/Controller.aspx/AsignarCupoCamion";
+              //var ourl = "http://www.toepfer.com.ar/merws/Controller.aspx/AsignarCupoCamion";
+              //var ourl = "http://www.jm2.com.ar/controller.aspx/AsignarCupoCamion";
               $.ajax({
 
 
@@ -82,64 +109,82 @@
 
                   success:
                                function (data, textStatus, XMLHttpRequest) {
-                                             alert("function" );
-                                             alert("data.dddd" + data.d);
-                                            
-                                             $("#contenido").html('');
-
-                                             /* Vemos que la respuesta no este vacía y sea una arreglo */
-
-                                             // if(data != null && $.isArray(data)){
-                                             if (data != null) {
 
 
-                                                 //var json = $.parseJSON(data.d);
-                                                 var json = JSON.parse(data.d);
-                                                 alert("json" + json.CODIGO);
-                                                 $("#contenido").append("<tr><td>" + json.CODIGO + "</td><td>" + json.FECHACUPO + "</td><td>" + json.PUERTO + "</td></tr>");
+                                   /* Vemos que la respuesta no este vacía y sea una arreglo */
+                                   if (data.d == '') {
+                                       alert('No Existe el Cupo para ese Codigo.');
+                                       return;
 
-                                                 alert("typeof (Storage) :" + typeof (Storage));
-                                                 if (typeof (Storage) !== "undefined") {
-                                                     alert("!==  : 1");
-                                                     localStorage.setItem("CODIGO", json.CODIGO);
-                                                     localStorage.setItem("FECHACUPO", json.FECHACUPO);
-                                                     localStorage.setItem("PUERTO", json.PUERTO);
-                                                     localStorage.setItem("PATENTE", json.PATENTE);
-                                                     alert("!==  : 2");
-                                                  
-                                                     window.setTimeout(function () { window.location = "LiberarCupo.html"; }, 3000);
-
-                                                 } else {
-                                                     alert('Sorry! No Web Storage support..!');
-
-                                                 }
+                                   }
+                                   // if(data != null && $.isArray(data)){
+                                   if (data != null) {
 
 
+                                       //var json = $.parseJSON(data.d);
+                                       var json = JSON.parse(data.d);
+                                       // alert("json" + json.CODIGO);
 
-                                             }
-                                             else {
-                                                 alert('data null');
+                                       // alert("typeof (Storage) :" + typeof (Storage));
+                                       if (typeof (Storage) !== "undefined") {
+                                           //alert("!==  : 1");
+                                           localStorage.setItem("CODIGO", json.CODIGO);
+                                           localStorage.setItem("FECHACUPO", json.FECHACUPO);
+                                           localStorage.setItem("PUERTO", json.PUERTO);
+                                           localStorage.setItem("PATENTE", json.PATENTE);
+                                           //alert("!==  : 2");
 
-                                             }
+                                           window.setTimeout(function () { window.location = "LiberarCupo.html"; }, 3000);
+
+                                       } else {
+                                           alert('Sorry! No Web Storage support..!');
+
+                                       }
 
 
-                                         },
+
+                                   }
+                                   else {
+                                       alert('data null');
+
+                                   }
+
+
+                               },
 
                   failure: function (XMLHttpRequest, textStatus, errorThrown) {
                       alert(textStatus);
                   }
 
               });
+              show();
           }
 
-         
-
-       
 
 
 
-          
 
+
+
+
+          /******************************************JAVASCRIPT CSS*******************************************/
+          function show() {
+              document.getElementById("myDiv").style.display = "block";
+              setTimeout("hide()", 10000);  // 4 seconds
+          }
+
+          function hide() {
+              document.getElementById("myDiv").style.display = "none";
+          }
+
+          function showin(ref) {
+              document.getElementById(ref).style.opacity = '1';
+          }
+          function bodyonload() {
+              showin("controles");
+              showin("mainStatusLine");
+          }
+          /***********************************END JAVASCRIPT CSS*******************************************/
 
     </script>
 
@@ -153,10 +198,11 @@
 
 	<div id="controles" class="control-center">		
 		<form name="frmSel" method="post"  id="searchfilter" autocomplete="off">
-			<input required inputmode="numeric" class="input-cupo" maxlength="10" id="txtCupo" type="text" name="txtCupo" placeholder="C&oacute;digo de Cupo" />							
+			<input required inputmode="numeric" class="input-cupo" maxlength="11" id="txtCupo" type="text" name="txtCupo" placeholder="C&oacute;digo de Cupo" />							
 			<input required inputmode="verbatim" class="input-cupo" maxlength="10" id="txtPatente" type="text" name="txtPatente" placeholder="Patente" />		
 			<button class="main-menu-item" maxlength="10" type="button" class="inputstatus"  onclick="PedirCupo(txtCupo.value, txtPatente.value)"  value="REGISTRAR">REGISTRAR</button>
 		</form>
+        <div class="divloading" id = "myDiv" style="display:none"><img id = "myImage" src = "images/loading-bar2.gif" alt="Cargando" ></div>
 	</div>
 </body>
 </html>
