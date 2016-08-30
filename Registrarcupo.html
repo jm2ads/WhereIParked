@@ -91,8 +91,9 @@
             //  alert(JSON.stringify(mydata));
               //var ourl = "http://localhost:64858/Controller.aspx/TBLCUPOSNOMINADOS_GET_BY_CODIGO_Json";
               //url: "http://localhost/CuposCamiones/CupoCamiones.asmx/TBLCUPOSNOMINADOS_GET_BY_CODIGO_Json",
-              var ourl = "http://localhost:64858/Controller.aspx/AsignarCupoCamion";
-              //var ourl = "http://www.toepfer.com.ar/merws/Controller.aspx/AsignarCupoCamion";
+
+              //var ourl = "http://localhost:64858/Controller.aspx/AsignarCupoCamion";
+              var ourl = "http://www.toepfer.com.ar/merws/Controller.aspx/AsignarCupoCamion";
               //var ourl = "http://www.jm2.com.ar/controller.aspx/AsignarCupoCamion";
               $.ajax({
 
@@ -128,7 +129,8 @@
                                        // alert("typeof (Storage) :" + typeof (Storage));
                                        if (typeof (Storage) !== "undefined") {
                                            //alert("!==  : 1");
-                                           localStorage.setItem("CODIGO", json.CODIGO);
+                                           //localStorage.setItem("CODIGO", json.CODIGO);
+                                           localStorage.setItem("CODIGO", oCodigoIn);
                                            localStorage.setItem("FECHACUPO", json.FECHACUPO);
                                            localStorage.setItem("PUERTO", json.PUERTO);
                                            localStorage.setItem("PATENTE", json.PATENTE);
