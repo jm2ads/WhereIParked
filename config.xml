@@ -9,11 +9,11 @@
 	<name>Toepfer-Cupos</name>
 
 	<description>
-		Hello World sample application that responds to the deviceready event.
+		Toepfer-Reserva de Cupos de Camiones
 	</description>
 
 	<author href="http://www.jm2.com.ar" email="jm2@outlook.com.ar">
-		PhoneGap Team
+		Toepfer Team
 	</author>
 
 	<!--
