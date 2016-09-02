@@ -1,7 +1,9 @@
 @import url("searcher.css");
 @import url('ActisaIntra-1.css');
 @import url('txtstyle.css');
-	
+
+
+
 	body {background: white!important;
 			
 			}
@@ -24,7 +26,7 @@
 
 	.li-titulo {
 			color: #666666;
-			font-size: 0.75em; 
+			font-size: 1.3em; 
 			padding-bottom: 2px;
 			}
 	.li-valor {
@@ -32,6 +34,7 @@
 			padding-bottom: 10px;
 			text-align: center;
 			font-family: Verdana, Arial, Helvetica;
+            font-size:1em;
 			}
 	.input-cupo {
 			height: 2em;
@@ -40,6 +43,7 @@
 			width:100%;
 			display:inline-block;
 			padding-bottom:3px;
+		   text-transform : uppercase; 
 				}
 	.fade {			
 			visibility: visible;
@@ -87,8 +91,22 @@
 	#mainStatusLine {
 			width : 90%;
 			left: 0;
-		}
-		
+			}
+
+			
+.divloading{
+width:100%;
+}
+			.divloading img {
+left:0;
+right:0;
+width:100%;
+border:2px white;
+height:10px;
+margin-top:10px;
+
+
+}			
 		/*----------RESPONSIVE----------*/ 
 @media screen and 	( max-device-width :260px ) {
 		
@@ -161,10 +179,4 @@
 		}
 }	
 /* index STILOS */
-
-
-
-
-
-
 
