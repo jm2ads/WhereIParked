@@ -186,28 +186,43 @@
               document.getElementById(ref).style.opacity = '1';
           }
           function bodyonload() {
-              showin("controles");
-              showin("mainStatusLine");
+              document.addEventListener("deviceready", onDeviceReady, false);
+			 showin("controles");
+            showin("logodiv");
+            showin("searchfilter");
+//              showin("mainStatusLine");
           }
+          function onDeviceReady() {
+                // Añade una función 'callback' al evento 'backbutton'
+                document.addEventListener("backbutton", onBackKeyDown, false);
+            }
+            function onBackKeyDown() {
+                //    alert("onBackKeyDown");
+                //    alert($.mobile.activePage.attr('id'));
+                navigator.app.exitApp();
+
+            }
           /***********************************END JAVASCRIPT CSS*******************************************/
 
     </script>
 
 
 </head>
-<body >
-	<div id="logodiv" class="logo-center">
-		<img width="121" height="23" src="images/act-logo-small.png" alt="Toepfer">
-	</div>	
-	<hr id="mainStatusLine" class="fade" />	
+<body onload="bodyonload()" >
+     <!--<div id="logodiv" class="logo-center">
+        <img width="121" height="23" src="images/act-logo1.png" alt="Toepfer">
+    </div>-->
+    <div id="controles" class="control-center fade">
+        <div id="logodiv" class="logo-center fade">
+            <img width="121" height="23" src="images/act-logo1.png" alt="Toepfer">
+        </div>
+        <form name="frmSel" method="post" id="searchfilter" autocomplete="off">
+            <input required inputmode="numeric" style="margin-left:12px;" class="input-cupo" maxlength="11" value="" id="txtCupo" type="text" name="txtCupo" placeholder="C&oacute;digo de Cupo" />
+            <input required inputmode="verbatim" style="margin-left:12px;" class="input-cupo" maxlength="10" value="" id="txtPatente" type="text" name="txtPatente" placeholder="Patente" />
+            <button class="main-menu-item" style="margin-top:10px;" maxlength="10" type="button" class="inputstatus" onclick="PedirCupo(txtCupo.value,txtPatente.value)" value="REGISTRAR">REGISTRAR</button>
+            <div class="divloading" id="myDiv" style="display:none"><img id="myImage" style="width: 90%;" src="images/Progressbar.gif" alt="Cargando..."></div>
+        </form>
 
-	<div id="controles" class="control-center">		
-		<form name="frmSel" method="post"  id="searchfilter" autocomplete="off">
-			<input required inputmode="numeric" class="input-cupo" maxlength="11" id="txtCupo" type="text" name="txtCupo" placeholder="C&oacute;digo de Cupo" />							
-			<input required inputmode="verbatim" class="input-cupo" maxlength="10" id="txtPatente" type="text" name="txtPatente" placeholder="Patente" />		
-			<button class="main-menu-item" maxlength="10" type="button" class="inputstatus"  onclick="PedirCupo(txtCupo.value, txtPatente.value)"  value="REGISTRAR">REGISTRAR</button>
-		</form>
-        <div class="divloading" id = "myDiv" style="display:none"><img id = "myImage" src = "images/loading-bar2.gif" alt="Cargando" ></div>
-	</div>
+    </div>
 </body>
 </html>

@@ -9,7 +9,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<!-- <link rel="stylesheet" type="text/css" href="css/searcher.css"> -->
+<link rel="stylesheet" type="text/css" href="css/searcher.css">
 
 <link rel="stylesheet" type="text/css" href="css/stylosmobile.css">
   <script src="Scripts/jquery.min.js"></script>
@@ -27,10 +27,10 @@
             document.addEventListener("deviceready", onDeviceReady, false);
 		    //Muestra contenido de la pagina (efecto).
 		    showin("logodiv");
-		    showin("resumen");
-		    showin("mainStatusLine");
-		    showin("searchfilter");
-
+		    showin("controles");
+    showin("logodiv");
+    showin("contformu");
+		
 			//Aca se verifica si ya se tiene asociado un cupo o se permite al usuario asociar su patente.
 			var patente = localStorage.getItem("PATENTE");
 			var dsPuerto = localStorage.getItem("PUERTO");
@@ -80,8 +80,19 @@
 function LiberarCupo() {
     localStorage.clear();
     window.setTimeout(function () { window.location = "Registrarcupo.html"; }, 3000);
+    show()
 }
 /*javascript css*/
+/******************************************JAVASCRIPT CSS*******************************************/
+function show() {
+    document.getElementById("myDiv").style.display = "block";
+    setTimeout("hide()", 10000);  // 10 seconds
+}
+
+function hide() {
+    document.getElementById("myDiv").style.display = "none";
+}
+
 function showin(ref) {
     document.getElementById(ref).style.opacity = '1';
 }
@@ -92,37 +103,34 @@ function onDeviceReady() {
     document.addEventListener("backbutton", onBackKeyDown, false);
 }
 function onBackKeyDown() {
-    alert("onBackKeyDown");
- 
-    navigator.app.exitApp();
+//    alert("onBackKeyDown");
+//    alert($.mobile.activePage.attr('id'));
+       navigator.app.exitApp();
 
 }
-
+ 
 
 	</script>
 </head>
-<body onload="bodyonload()" >
-	<div id="logodiv" class="logo-center">
-		<img width="121" height="23" src="images/act-logo-small.png" alt="Toepfer">
-	</div>	
-	<hr id="mainStatusLine" class="fade" />	
-	<div id="resumen" class="resumen-center fade ">  			
-		<form name="frmSel" id="searchfilter" method="post" autocomplete="off">
-			<ul>
-				<li class="li-titulo">N&uacute;mero de Cupo</li>
-				<li class="li-valor"><div id="nroCupo"></div></li>
-				<li class="li-titulo">Fecha Cupo</li>
-				<li class="li-valor"><div id="fechaCupo"></div></li>
-				<li class="li-titulo">Planta</li>
-				<li class="li-valor"><div id="puerto"></div></li>
-				<li class="li-titulo">Patente</li>				
-				<li class="li-valor"><div id="patente"></div></li>
-				
-			</ul>
-			<button  id="searchfilter" type="button" class="input-cupo" onclick="LiberarCupo(txtCupo.value)" value="LIBERAR CUPO">LIBERAR CUPO </button>
-			<input id="txtCupo" type="hidden" name="txtCupo"  />							
-			<input id="txtPatente" type="hidden" name="txtPatente"  />					
-		</form>
-	</div>
-	   </body>
+<body onload="bodyonload()">
+    <div id="controles" class="control-liberarcupos fade ">
+        <div id="logodiv" class="logo-center fade">
+            <img width="121" height="23" src="images/act-logo1.png" alt="Toepfer">
+        </div>
+        <div id="contformu" class="contenedorformulario fade">
+            <form name="frmSel" method="post" id="searchfilterliberar fade" autocomplete="off">
+                <div class="li-titulo">N&uacute;mero de Cupo:<div class="li-valor" id="nroCupo"></div></div>
+                <div class="li-titulo">Fecha Cupo:<div class="li-valor"><div id="fechaCupo"></div></div></div>
+                <div class="li-titulo">Planta:<div class="li-valor"><div id="puerto"></div></div></div>
+                <div class="li-titulo">Patente:<div class="li-valor"><div id="patente"></div></div></div>
+        </div>
+        <div class="divbotonimg">
+            <button id="searchfilterLiberar" type="button" class="input-cupo" onclick="LiberarCupo()" value="LIBERAR CUPO">LIBERAR CUPO </button>
+            <input id="txtCupo" type="hidden" name="txtCupo"  />	
+            <input id="txtPatente" type="hidden" name="txtPatente"  />	
+            <div class="divliberarloading" id="myDiv" style="display:none;"><img id="myImage" style="width: 90%;" src="images/Progressbar.gif" alt="Cargando..."></div>
+        </div>
+    </form>
+       </div>
+</body>
 <html>
