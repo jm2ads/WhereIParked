@@ -13,14 +13,18 @@
 
 <link rel="stylesheet" type="text/css" href="css/stylosmobile.css">
   <script src="Scripts/jquery.min.js"></script>
+   <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+ <!-- <script type="text/javascript" charset="utf-8" src="phonegap-1.0.0.js"></script>-->
+
 <head>
 <body>
   <script type="text/javascript">
-		
-		
-	
-		
-		function bodyonload() {
+
+
+
+
+      function bodyonload() {
+            document.addEventListener("deviceready", onDeviceReady, false);
 		    //Muestra contenido de la pagina (efecto).
 		    showin("logodiv");
 		    showin("resumen");
@@ -83,6 +87,15 @@ function showin(ref) {
 }
 /* END javascript css*/
 
+function onDeviceReady() {
+    // Añade una función 'callback' al evento 'backbutton'
+    document.addEventListener("backbutton", onBackKeyDown, false);
+}
+function onBackKeyDown() {
+    alert($.mobile.activePage.attr('id'));
+    navigator.app.exitApp();
+
+}
 
 
 	</script>
@@ -111,4 +124,4 @@ function showin(ref) {
 		</form>
 	</div>
 	   </body>
-<html> 
+<html>
