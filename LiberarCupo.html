@@ -92,6 +92,7 @@ function onDeviceReady() {
     document.addEventListener("backbutton", onBackKeyDown, false);
 }
 function onBackKeyDown() {
+    alert("onBackKeyDown");
     alert($.mobile.activePage.attr('id'));
     navigator.app.exitApp();
 
