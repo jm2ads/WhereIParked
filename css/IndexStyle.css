@@ -36,7 +36,7 @@ img {
 			position: relative;			
 		}	
 		.logo-pos{		
-			padding-top:50%;
+			padding-top:10%;
 			}
 			.logo-pos img {			
 			display: inherit;
@@ -50,4 +50,4 @@ img {
 			display: inherit;
 			margin: auto;
 			}
-		}
+     

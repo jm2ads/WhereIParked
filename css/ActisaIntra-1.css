@@ -136,7 +136,7 @@ IMG
     BORDER-TOP: 0px;
     BORDER-RIGHT: 0px
 }
-INPUT
+/*INPUT
 {
     BORDER-BOTTOM: #000000 1px solid;
     BORDER-LEFT: #000000 1px solid;
@@ -145,7 +145,7 @@ INPUT
     FONT-SIZE: 8pt;
     BORDER-TOP: #000000 1px solid;
     BORDER-RIGHT: #000000 1px solid
-}
+}*/
 SELECT
 {
     BORDER-BOTTOM: #000000 1px solid;
