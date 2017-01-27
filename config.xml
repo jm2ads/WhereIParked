@@ -1,19 +1,20 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "com.phonegap.WhereIParked"
-        version   = "1.0.0">
+        id        = "com.phonegap.CuposCamiones"
+		versionCode = "124"
+        version   = "1.0.5">
 
-	<name>Jm2-Where I Parked?</name>
+	<name>Toepfer-Truck</name>
 
 	<description>
-		Jm2-Where I Parked?
+		Toepfer-Reserva de Cupos de Camiones
 	</description>
 
 	<author href="http://www.jm2.com.ar" email="jm2@outlook.com.ar">
-		JM2 Team
+		Toepfer Team
 	</author>
 
 	<!--
@@ -24,7 +25,7 @@
 	<preference name="permissions"                value="none"/>
 
 	<!-- Customize your app and platform with the preference element. -->
-	<preference name="orientation"                value="default" />
+	<preference name="orientation"                value="portrait" />
 	<!-- all: default means both landscape and portrait are enabled -->
 	<preference name="target-device"              value="universal" />
 	<!-- all: possible values handset, tablet, or universal -->
@@ -51,11 +52,11 @@
 	<preference name="android-installLocation"    value="auto" />
 	<!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
 	<!--
-        Define a specific version of PhoneGap to build into your app.
-        <preference name="phonegap-version"       value="3.5.0" />
-    -->
-	<preference name="phonegap-version"       value="3.5.0" />	
-<!-- Plugins -->
+        Define a specific version of PhoneGap to build into your app.  -->
+        <preference name="phonegap-version"       value="cli-6.0.0" />
+  
+
+	<!-- Plugins -->
 
 	<!-- Core plugins -->
 	<plugin name="cordova-plugin-battery-status" />
@@ -84,7 +85,7 @@
     -->
 
 	<!-- Define app icon for each platform. -->
-	<icon src="Images/0.png" />
+	<icon src="images/toepfer.png" />
 	<!--<icon src="icon.png" />
 	<icon src="res/icon/android/icon-36-ldpi.png"   gap:platform="android"    gap:qualifier="ldpi" />
 	<icon src="res/icon/android/icon-48-mdpi.png"   gap:platform="android"    gap:qualifier="mdpi" />
