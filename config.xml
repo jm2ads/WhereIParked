@@ -55,6 +55,8 @@
         <preference name="phonegap-version"       value="3.5.0" />
     -->
 	<preference name="phonegap-version"       value="cli-6.0.0" />
+	<preference name="windows-target-version"  value="8.1" /> 
+        <preference  name="windows-phone-target-version" value="8.1" /> 
 	<!-- Plugins -->
 
 	<!-- Core plugins -->
