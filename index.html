@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Educar</title>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="css/IndexStyle.css"></link>
+    <link rel="shortcut icon" href="images/educar.png"></link>
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/app.js" type="text/javascript"></script>
+</head>
+<body onload="bodyonload()">
+    <div id="logodiv" class="fade logo-center">
+        <img width="224" height="112" src="images/act-logo1.png" alt="toepfer" />
+    </div>
+    <div class="menu-container">
+        <ul id="mainMenu" class="main-menu fade">
+        </ul>
+    </div>
+    <script type="text/javascript">
+      function ServiceFailed(result) {
+          //  Log('Service call failed: ' + result.status + '  ' + result.statusText);
+        }
+
+        function ServiceSucceeded(result) {
+//            resultObject = result.DoworkResult;
+//            Log("Success: " + resultObject);
+//            alert(resultObject);
+        }
+
+
+
+        function bodyonload() {
+
+
+            sessionStorage.clear();
+            showin("logodiv");
+            setTimeout(function () { document.getElementById("logodiv").style.opacity = "0"; }, 2000);
+
+            setTimeout(function () { showin("mainMenu"); }, 3000);
+
+
+
+
+
+            window.setTimeout(function () { window.location = "SeleccionPlataforma.html"; }, 3000);
+        
+
+            if (localStorage == null) {
+                //se muestra el form para sociar un cupo nuevo.
+                window.setTimeout(function () { window.location = "SeleccionPlataforma.html"; }, 3000);
+            }
+            else {
+                if (localStorage.getItem("CODIGOCUPO") == null) {
+                    //se muestra el form para sociar un cupo nuevo.
+                  //  window.setTimeout(function () { window.location = "Registrarcupo.html"; }, 3000);
+                    window.setTimeout(function () { window.location = "SeleccionPlataforma.html"; }, 3000);
+                }
+                else {
+
+
+
+
+
+            
+        
+
+
+                    var nroCupo = localStorage.getItem("CODIGOCUPO");
+                    var FECHACUPO = localStorage.getItem("FECHACUPO");
+                    var PATENTE = localStorage.getItem("PATENTE");
+
+                    // Add the page method call as an onclick handler for the div.
+                    var mydata = {
+                        			            oCODIGOSCUPOCli: nroCupo,
+                        			            oFECHACUPO: FECHACUPO,
+                        			            oPATENTE: PATENTE
+                       
+
+                    }
+                    //  alert(JSON.stringify(mydata));
+                        			      // var ourl = oUrlStart + "VerificarCupoActivo3";
+                        			       var ourl = oUrlStart + "VerificarCupoActivo/oCODIGOSCUPOCli=" + nroCupo + ",oFECHACUPO=" + FECHACUPO + ",oPATENTE=" + PATENTE ;
+                        			       //  var ourl = oUrlStart + "VerificarCupoActivo3/oCODIGOSCUPOCli=1";
+
+
+
+                                               
+             
+
+
+
+
+
+
+
+
+                    $.ajax({
+                        url: ourl,
+                        type: "GET",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "jsonp",
+                        cache: false,
+                       // data: JSON.stringify(mydata),
+                        data: mydata,
+                        success:
+                       function (data, textStatus, XMLHttpRequest) {
+                           /* Vemos que la respuesta no este vacía y sea una arreglo */
+                           //                                   if (data.d == '') {
+                           //                                       alert('Los datos ingresados no son validos.');
+                           //                                       return;
+                           //                                   }
+
+                           if (data != null) {
+
+                               if (data > 0) {
+                                   localStorage.clear();
+                                   window.setTimeout(function () { window.location = "Registrarcupo.html"; }, 3000);
+                               }
+                               else
+                                   window.setTimeout(function () { window.location = "LiberarCupo.html"; }, 3000);
+                           }
+                           else {
+                               alert('data null');
+
+                           }
+
+
+                       },
+
+                        failure: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert(textStatus);
+                        }
+
+                    });
+
+
+
+
+
+                }
+
+            }
+
+        }
+    </script>
+</body>
+</html>

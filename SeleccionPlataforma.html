@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <!--bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!--custom css-->
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <!--component-css-->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/fade.js"></script>
+    <script src="js/app.js" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+    <!--script-->
+    <title>Educar</title>
+    <script type="text/javascript" language="javascript">
+       
+       
+ 
+    </script>
+    <script type="text/javascript" language="javascript">
+        function SeleccionGradoIr(oThis) {
+           // document.getElementById('Plataforma').value = oThis.id;
+            sessionStorage.setItem("Plataforma", oThis.id);
+
+         // window.setTimeout(function () { window.location = "SeleccionGrado.html"; }, 3000);
+            window.setTimeout( document.forms["frmSel"].submit() , 3000);
+        }
+
+
+
+
+
+
+
+
+         
+
+    </script>
+</head>
+<body onload="bodyonload()" id="controles" class="trigo fade">
+    <!-- LOGO TOEPFER -->
+    <div class="logoToepfer">
+        <img width="150" height="30" src="images/act-logo2.png" alt="Toepfer">
+    </div>
+    <!-- END LOGO TOEPFER -->
+    <!-- Logo Camion -->
+    <div class="subtitulo">
+        <table class="tablelogo">
+            <tr>
+                <td>
+                    <p>
+                        <img width="45" height="30" src="images/camion2.png" alt="Camion" style="margin-right: 5px;" />Seleccionar
+                        Plataforma
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- END Logo Camion -->
+    <!-- INPUT TEXT -->
+    <div class="formpatente">
+        <form name="frmSel" method="get" action="SeleccionGrado.html" >
+         <input id="Plataforma" name="Plataforma" type="hidden" value="X" />
+        <div id="divContainer">
+           
+            <div>
+                <button type="button" class="borde2" style="width: 100%;" onclick="SeleccionGradoIr(this)" id="A" name="Aprender" >Aprender</button>
+            </div>
+
+            <div> 
+               <button type="submit" class="borde2" style="width: 100%;" onclick="SeleccionGradoIr(this)" id="P" name="Pisa"  >Pisa</button>
+            </div>
+        </div>
+        <!-- END INPUT TEXT -->
+        <!-- IMAGEN LOADING HIDDEN-->
+        <!--Mostrar y ocultar con Js-->
+        <div class="divimagen" id="divProgress">
+            <img id="imgProgress" class="divloading" src="images/loading7.gif" alt="Cargando..." />
+        </div>
+        <!-- END IMAGEN LOADING HIDDEN -->
+        <!-- BOTON  -->
+      
+        </form>
+       <!-- <label class="estilocartelInfo">
+            <b style="">Seleccion de Plataforma. </b>
+        </label>-->
+        <!-- END BOTON  -->
+    </div>
+    <!-- FOOTER -->
+    <footer id="fh5co-footer" role="contentinfo">
+        <div class="container">
+            <div class="col-md-12 fh5co-copyright text-center navbar-fixed-bottom">
+                <b class ="stilofooter">Copyright 2016 Alfred C. Toepfer Internatinal S.R.L.</b>
+            </div>
+        </div>
+    </footer>
+    <!-- END FOOTER -->
+    <!-- SCRIPTS SCROLL BAR -->
+    <script src="js/jquery.nicescroll.js"></script>
+    <script src="js/scripts.js"></script>
+    <!-- END SCRIPTS SCROLL BAR -->
+	
+	
+
+</body>
+</html>

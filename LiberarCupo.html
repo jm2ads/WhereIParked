@@ -1,0 +1,362 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <!--bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!--custom css-->
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <!--component-css-->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/fade.js"></script>
+    <script src="js/app.js" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <!--script-->
+    <title>Educar</title>
+    <script type="text/javascript">
+        var setIntervalID;
+        function bodyonload() {
+            document.addEventListener("deviceready", onDeviceReady, false);
+            //Muestra contenido de la pagina (efecto).
+
+            showin("controles");
+
+
+            //Aca se verifica si ya se tiene asociado un cupo o se permite al usuario asociar su patente.
+
+
+            var CODIGOCUPO_LS = localStorage.getItem("CODIGOCUPO");
+            var FECHACUPO_LS_AUX = localStorage.getItem("FECHACUPO");
+            var PATENTE_LS = localStorage.getItem("PATENTE");
+            var MOVIL_LS = localStorage.getItem("MOVIL");
+            var PRODUCTO_LS = localStorage.getItem("PRODUCTO");
+
+            FECHACUPO_LS = FECHACUPO_LS_AUX.trim().substring(0, 4) + '-' + FECHACUPO_LS_AUX.trim().substring(4, 6) + '-' + FECHACUPO_LS_AUX.trim().substring(6, 8);
+
+
+            if (CODIGOCUPO_LS.trim().length == 9) {
+                puertocod = 91;
+            }
+            else {
+                if (CODIGOCUPO_LS.trim().substring(0, 1) == 'T')
+                    puertocod = 10;
+                if (CODIGOCUPO_LS.trim().substring(0, 1) == 'A')
+                    puertocod = 36;
+            }
+
+
+            switch (puertocod) {
+                case 10:
+                    dsPuerto = 'Transito';
+                    break;
+                case 36:
+                    dsPuerto = 'Arroyo';
+                    break;
+                case 91:
+                    dsPuerto = 'Bahia';
+                    break;
+                default:
+                    dsPuerto = 'Error';
+            }
+
+            var OldPattern = /^[a-z]{3}[0-9]{3}$/;
+            var NewPattern = /^[a-z]{2}[0-9]{3}[a-z]{2}$/;
+            if (OldPattern.test(PATENTE_LS.toString().trim())) {
+                PATENTE_LS = PATENTE_LS.trim().substring(0, 3) + '-' + PATENTE_LS.trim().substring(3, 6);
+            }
+
+
+            if (NewPattern.test(PATENTE_LS.toString().trim())) {
+                PATENTE_LS = PATENTE_LS.trim().substring(0, 2) + '-' + PATENTE_LS.trim().substring(2, 5) + '-' + PATENTE_LS.trim().substring(5, 7);
+            }
+
+
+            //Tiene asociado un cupo				
+            document.getElementById("nroCupo").innerHTML = CODIGOCUPO_LS;
+            
+            document.getElementById("fechaCupo").innerHTML = FECHACUPO_LS;
+            document.getElementById("puerto").innerHTML = dsPuerto;
+            document.getElementById("patente").innerHTML = PATENTE_LS;
+            document.getElementById("producto").innerHTML = PRODUCTO_LS;
+            document.getElementById("txtCupo").value = "";
+            document.getElementById("txtPatente").value = "";
+
+            //  CallVerificarCupoActivo(CODIGOCUPO_LS, FECHACUPO_LS_AUX, PATENTE_LS);
+            if (new Date(FECHACUPO_LS + "T12:00:00").getDay() == 6 || new Date(FECHACUPO_LS + "T12:00:00").getDay() == 0) {
+                document.getElementById("validez").innerText = "Recuerde que  el CUPO es valido desde las 15 h del dia anterior hasta las 15 h del " + FECHACUPO_LS;
+            }
+            else {
+                document.getElementById("validez").innerText = "Recuerde que  el CUPO es valido desde las 15 h del dia anterior hasta las 17 h del " + FECHACUPO_LS;
+            }
+            setIntervalID = setInterval(function () {
+                CallVerificarCupoActivo(CODIGOCUPO_LS, FECHACUPO_LS_AUX, PATENTE_LS)
+            }, Interval);
+        }
+
+        function CallVerificarCupoActivo(CODIGOCUPO, FECHACUPO, PATENTE) {
+            if (isphone() == false)
+                document.getElementById("loop").innerHTML = "Copyright 2016 Alfred C. Toepfer Internatinal S.R.L." + Date();
+
+            var mydata = {
+                oCODIGOSCUPOCli: CODIGOCUPO,
+                oFECHACUPO: FECHACUPO,
+                oPATENTE: PATENTE
+
+            }
+            //  alert(JSON.stringify(mydata));
+            //var ourl = oUrlStart + "VerificarCupoActivo";
+            var ourl = oUrlStart + "VerificarCupoActivo/oCODIGOSCUPOCli=" + CODIGOCUPO + ",oFECHACUPO=" + FECHACUPO + ",oPATENTE=" + PATENTE;                                            			          			       
+            $.ajax({
+                url: ourl,
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "jsonp",
+                 async: false,
+                cache: false,
+                //data: JSON.stringify(mydata),
+                data: mydata,
+                success:
+                       function (data, textStatus, XMLHttpRequest) {
+
+                           if (data != null) {
+                               var oRta = data;
+                               if (oRta == 0) {
+                                   //                                   alert('El cupo sigue igual');
+                                   //                                   sleep(10000);
+                                   //                                   CallVerificarCupoActivo(CODIGOCUPO, FECHACUPO, PATENTE);
+
+
+                                   // var oTimer = setInterval(CallVerificarCupoActivo(CODIGOCUPO, FECHACUPO, PATENTE), newtime);
+
+                               }
+                               'El Cupo fue ingresado correctamente al sistema'
+
+                               if (oRta == 1) {
+                                   vibrateandbeep();
+                                   clearInterval(setIntervalID);
+                                   alert('El Cupo fue ingresado correctamente al sistema');
+                                   localStorage.clear();
+                                   window.location = "Registrarcupo.html";
+                               }
+
+                               if (oRta == 2) {
+                                   vibrateandbeep();
+                                   clearInterval(setIntervalID);
+                                   alert('El cupo esta asignado a otra patente');
+                                   localStorage.clear();
+                                   window.location = "Registrarcupo.html";
+                               }
+                               
+                           }
+                           else {
+                               return -1;
+                           }
+
+
+                       },
+
+                failure: function (XMLHttpRequest, textStatus, errorThrown) {
+                    return -1;
+                }
+
+            });
+
+
+       
+
+
+
+        }
+
+        function vibrateandbeep() {
+            if (isphone() == true) {
+                navigator.notification.beep(2);
+                navigator.notification.vibrate(3000);
+            }
+        }
+    </script>
+    <script type="text/javascript">
+     
+    //  EN DESUSO LIBERABA CUPO HACIENDO UN UPD  
+        function LiberarCupo() {
+
+            var oConfirm = confirm("Liberará el cupo : " + localStorage.getItem("CODIGOCUPO") + " . \n Confirma?");
+            if (oConfirm != true) {
+                return;
+            }
+
+            clearInterval(setIntervalID);
+
+            var CODIGOCUPO_LS = localStorage.getItem("CODIGOCUPO");
+            var FECHACUPO_LS = localStorage.getItem("FECHACUPO");
+            var PATENTE_LS = localStorage.getItem("PATENTE");
+            var MOVIL_LS = localStorage.getItem("MOVIL");
+
+            show("imgProgress");
+            //alert('Liberara el Cupo ' + CODIGOCUPO_LS);
+            // Add the page method call as an onclick handler for the div.
+            var mydata = {
+                oCodigo: CODIGOCUPO_LS,
+                oFecha: FECHACUPO_LS,
+                oPatente: PATENTE_LS,
+                oMovil: MOVIL_LS
+            }
+
+            var ourl = oUrlStart + "LiberarCupoCamion";
+
+            $.ajax({
+                url: ourl,
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "jsonp",
+                async: false,
+                cache: false,
+               // data: JSON.stringify(mydata),
+                data: mydata,
+                success:
+                               function (data, textStatus, XMLHttpRequest) {
+                                   hide("imgProgress");
+                                   if (data != null) {
+                                       // alert(data.d);
+                                       if (data != 0) {
+                                           alert('El cupo fue modificado y ya no es valido');
+                                           localStorage.clear();
+                                       }
+                                       else {
+                                           alert('El cupo fue liberado con Exito!');
+                                           localStorage.clear();
+                                       }
+                                   }
+                                   else {
+                                       alert('Error al liberar el Cupo');
+
+                                   }
+                               },
+
+                failure: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(textStatus);
+                    hide("imgProgress");
+                }
+
+            });
+
+            window.location = "Registrarcupo.html";
+        }
+        /*javascript css*/
+        /******************************************JAVASCRIPT CSS*******************************************/
+
+        function onDeviceReady() {
+            // AÃ±ade una funciÃ³n 'callback' al evento 'backbutton'
+            document.addEventListener("backbutton", onBackKeyDown, false);
+        }
+        function onBackKeyDown() {
+            //    alert("onBackKeyDown");
+            //    alert($.mobile.activePage.attr('id'));
+            navigator.app.exitApp();
+
+        }
+ 
+
+    </script>
+</head>
+<body onload="bodyonload()" id="controles" class="trigo fade">
+    <div class="body-back">
+        <div class="masthead pdng-stn1">
+            <div class="phone-box wrap push" id="home">
+                <div class="logoToepfer">
+                    <img width="150" height="30" src="images/act-logo2.png" alt="Toepfer">
+                </div>
+                <!-- LOGO CAMION SUBTITULO-->
+                <div class="subtitulo">
+                    <table class="tablelogo">
+                        <tr>
+                            <td>
+                                <p>
+                                    <img width="45" height="30" src="images/camion2.png" style="margin-right: 5px;" />Información
+                                    Cupo
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- END LOGO CAMION SUBTITULO-->
+            </div>
+            <div>
+                <!-- DIVS INFO CUPO -->
+                <form name="frmSel" method="post" id="searchfilterliberar fade" autocomplete="off">
+                <div class="formpatente">
+                    <div class="liberarcupo">
+                        <div class="li-titulo">
+                            N&uacute;mero de Cupo:<div class="li-valor" id="nroCupo">
+                                <b></b>
+                            </div>
+                        </div>
+                        <div class="li-titulo borde">
+                            Fecha Cupo:<div class="li-valor">
+                                <div id="fechaCupo">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="li-titulo borde">
+                            Planta:<div class="li-valor">
+                                <div id="puerto">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="li-titulo borde">
+                            Patente:<div class="li-valor">
+                                <div id="patente">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="li-titulo borde">
+                            Producto:<div class="li-valor">
+                                <div id="producto">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- IMAGEN LOADING HIDDEN-->
+                    <!--Mostrar y ocultar con Js-->
+                    <div class="divimagen" id="divProgress">
+                        <img id="imgProgress" class="divloading" src="images/loading7.gif" alt="Cargando..." />
+                    </div>
+                    <!-- END IMAGEN LOADING HIDDEN -->
+                    <!--BOTON -->
+                    <div>
+                        <input id="txtCupo" type="hidden" name="txtCupo" />
+                        <input id="txtPatente" type="hidden" name="txtPatente" />
+                        <button  type="button" id="btnSalir" class="borde2" onclick="ExitApp()" value="Salir">Salir</button>
+                    </div>
+                    <!--END BOTON -->
+                    <label class="estilocartelInfoliberar" id="validez" >
+                        <b style="" >
+                        Recuerde que  el CUPO es valido desde las 15horas del dia anterior.
+                        </b>
+                    </label>
+                </div>
+                </form>
+                <!-- END DIVS INFO CUPO -->
+              
+            </div>
+        </div>
+    </div>
+    <!-- FOOTER Copyright -->
+    <footer id="fh5co-footer" role="contentinfo">
+        <div class="container">
+            <div class="col-md-12 fh5co-copyright text-center navbar-fixed-bottom">
+                <b id="loop" class="stilofooter">Copyright 2016 Alfred C. Toepfer Internatinal S.R.L.</b>
+            </div>
+              
+        </div>
+       
+    </footer>
+    <!-- END FOOTER Copyright -->
+    <!-- JS SCROLLBAR -->
+    <script src="js/jquery.nicescroll.js"></script>
+    <script src="js/scripts.js"></script>
+    <!-- JS SCROLLBAR -->
+</body>
+</html>

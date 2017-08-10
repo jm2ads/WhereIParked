@@ -1,0 +1,337 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <!--bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!--custom css-->
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <!--component-css-->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/fade.js"></script>
+    <script src="js/app.js" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+    <!--script-->
+    <title>Educar</title>
+    
+    <script type="text/javascript" language="javascript">
+        function PedirCupo(oCodigoIn, oPatenteIn) {
+
+            var puertocod = 0;
+            oCodigoIn = oCodigoIn.toUpperCase();
+            oPatenteIn = oPatenteIn.toUpperCase();
+            //   oPatenteIn = oPatenteIn.toUpperCase();
+            if (oCodigoIn == null || oCodigoIn.trim().length == 0 || /^\s+$/.test(oCodigoIn.trim())) {
+                alert("Debe poner algun Valor en el Codigo");
+                return;
+            }
+            if (oCodigoIn.trim().length != 9 && oCodigoIn.trim().length != 11) {
+                alert("El Codigo no es valido");
+                return;
+            }
+
+
+
+            if (oPatenteIn == null || oPatenteIn.trim().length == 0 || /^\s+$/.test(oPatenteIn.trim())) {
+                alert("Debe poner algun Valor en la Patente");
+                return;
+            }
+
+            var OldPattern = /^[A-Z]{3}[0-9]{3}$/;
+            var NewPattern = /^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
+            if (!OldPattern.test(oPatenteIn.toString().trim()) && !NewPattern.test(oPatenteIn.toString().trim())) {
+                alert('La patente ingresada no es Valida');
+                return;
+            }
+
+
+            if (oCodigoIn.trim().length == 9) {
+                puertocod = 91;
+            }
+            else {
+                if (oCodigoIn.trim().substring(0, 1) != 'T' && oCodigoIn.trim().substring(0, 1) != 'A') {
+                    alert("El Codigo no es valido");
+                    return;
+                }
+                else {
+                    if (oCodigoIn.trim().substring(0, 1) == 'T')
+                        puertocod = 10;
+                    if (oCodigoIn.trim().substring(0, 1) == 'A')
+                        puertocod = 36;
+                }
+
+            }
+
+            var oConfirm = confirm("Desea confirmar los datos INGRESADOS ?");
+            if (oConfirm != true) {
+                return;
+            }
+
+            show("imgProgress");
+
+
+
+            //   alert(oMovileIn);
+            // Add the page method call as an onclick handler for the div.
+            var mydata = {
+                oCodigo: oCodigoIn,
+                oPatente: oPatenteIn,
+                oMovil: oMovileIn
+            }
+
+
+            var ourl = oUrlStart + "AsignarCupoCamion/oCodigo=" + oCodigoIn + ",oPatente=" + oPatenteIn + ",oMovil=" + oMovileIn;
+
+            $.ajax({
+                url: ourl,
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "jsonp",
+                async: false,
+                cache: false,
+                //data: "{}",
+                //data: "{ oCodigo: " + oCodigoIn + " }",
+
+                // data: JSON.stringify(mydata),
+                data: mydata,
+                success:
+                               function (data, textStatus, XMLHttpRequest) {
+
+                                   hide("imgProgress");
+                                   /* Vemos que la respuesta no este vacÃ­a y sea una arreglo */
+                                   json = data;
+                                   if (json.CODIGOCUPO == null) {
+                                       alert('Los datos ingresados no son validos.');
+                                       return;
+
+                                   }
+                                   // if(data != null && $.isArray(data)){
+                                   if (json != null) {
+                                       //var json = $.parseJSON(data.d);
+                                       // var json = JSON.parse(data.d);
+
+
+                                       if (json.CODIGOCUPO != oCodigoIn.trim()) {
+                                           alert('La patente ' + oPatenteIn + ' ya tiene asignado otro Cupo.');
+                                           return;
+                                       }
+
+                                       if (json.FECHACUPO == 0) {
+                                           alert('El cupo esta Vencido.');
+                                           return;
+                                       }
+
+                                       if (json.PATENTE.trim() != oPatenteIn.trim()) {
+                                           alert('El cupo esta asignado a otra patente.');
+                                           return;
+                                       }
+
+
+
+
+                                       // alert("typeof (Storage) :" + typeof (Storage));
+                                       if (typeof (Storage) !== "undefined") {
+                                           //alert("!==  : 1");
+                                           localStorage.setItem("CODIGOCUPO", json.CODIGOCUPO);
+                                           localStorage.setItem("FECHACUPO", json.FECHACUPO);
+
+                                           localStorage.setItem("PATENTE", json.PATENTE);
+                                           localStorage.setItem("MOVIL", json.MOVIL);
+                                           localStorage.setItem("PRODUCTO", json.DSPRODUCTO);
+
+                                           //alert("!==  : 2");
+
+                                           //window.setTimeout(function () { window.location = "LiberarCupo.html"; }, 3000);
+                                           window.location = "LiberarCupo.html";
+                                       } else {
+                                           alert('Sorry! No Web Storage support..!');
+                                       }
+                                   }
+                                   else {
+                                       alert('data null');
+                                   }
+
+
+                               },
+
+                failure: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(textStatus);
+                    hide("imgProgress");
+                },
+
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Status : " + textStatus + "Retorno : " + jqXHR.getResponseHeader('Content-Type'));
+                    hide("imgProgress");
+                }
+
+
+
+
+
+            });
+            // hide("myImage");
+        }
+
+
+
+
+
+
+
+
+         
+
+    </script>
+
+    
+</head>
+<body onload="bodyonload()" id="controles" class="trigo fade">
+    <div id="logodiv" class="fade logo-center">
+        <img width="150" height="30" src="images/act-logo1.png" alt="toepfer" />
+    </div>
+        <div class="menu-container">
+        <ul id="mainMenu" class="main-menu fade">
+        </ul>
+    </div>
+    <!-- LOGO TOEPFER -->
+    <div class="logoToepfer">
+        <img width="150" height="30" src="images/act-logo2.png" alt="Toepfer">
+    </div>
+    <!-- END LOGO TOEPFER -->
+    <!-- Logo Camion -->
+    <div class="subtitulo">
+        <table class="tablelogo">
+            <tr>
+                <td>
+                    <p>
+                        <img width="45" height="30" src="images/camion2.png" alt="Camion" style="margin-right: 5px;" />Seleccionar
+                        Disciplina
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- END Logo Camion -->
+    <!-- INPUT TEXT -->
+    <div class="formpatente">
+        <form name="frmSel" method="get" action="Encuesta.html" >
+        <input id="Plataforma" name="Plataforma" type="hidden" value="X" />
+        <input id="Grado" name="Grado" type="hidden" value="X" />
+         <input id="Disciplina" name="Disciplina" type="hidden" value="X" />
+        <!-- END INPUT TEXT -->
+        <!-- IMAGEN LOADING HIDDEN-->
+        <!--Mostrar y ocultar con Js-->
+        <div class="divimagen" id="divProgress">
+            <img id="imgProgress" class="divloading" src="images/loading7.gif" alt="Cargando..." />
+        </div>
+        <!-- END IMAGEN LOADING HIDDEN -->
+        <!-- BOTON  -->
+       
+        </form>
+        <div id="divContainer">
+            
+        </div>
+        <!--<label class="estilocartelInfo">
+            <b style="">Seleccione el Disciplina. </b>
+        </label>-->
+        <!-- END BOTON  -->
+    </div>
+    <!-- FOOTER -->
+    <footer id="fh5co-footer" role="contentinfo">
+        <div class="container">
+            <div class="col-md-12 fh5co-copyright text-center navbar-fixed-bottom">
+                <b class ="stilofooter">Copyright 2016 Alfred C. Toepfer Internatinal S.R.L.</b>
+            </div>
+        </div>
+    </footer>
+    <!-- END FOOTER -->
+    <!-- SCRIPTS SCROLL BAR -->
+    <script src="js/jquery.nicescroll.js"></script>
+    <script src="js/scripts.js"></script>
+    <!-- END SCRIPTS SCROLL BAR -->
+   
+         <script type="text/javascript">
+             var Plataforma
+             var Grado
+             $(document).ready(function () {
+                 Plataforma = getQueryVariable('Plataforma');
+                 Grado = getQueryVariable('Grado');
+
+                 document.addEventListener("deviceready", onDeviceReady, false);
+                 //Muestra contenido de la pagina (efecto).
+                 showin("controles");
+
+
+                 var ourl = oUrlStart + "disciplina_tipo_Get_List";
+                 //  var ourl = oUrlStart + "VerificarCupoActivo3/oCODIGOSCUPOCli=1";
+
+                 $.ajax({
+                     url: ourl,
+                     type: "GET",
+                     contentType: "application/json; charset=utf-8",
+                     dataType: "jsonp",
+                     cache: false,
+                     // data: JSON.stringify(mydata),
+                     // data: mydata,
+                     success:
+                       function (data, textStatus, XMLHttpRequest) {
+                           if (data != null) {
+                               var divContainer = document.getElementById('divContainer');
+                               var contador = 0;
+                               for (var i = 0; i < data.length; i++) {
+                                   contador += 1;
+
+                                   var aprueba = contador;
+                                   var nuevoBoton = document.createElement('button');
+                                   nuevoBoton.type = 'button';
+                                   nuevoBoton.textContent = data[i].descripcion;
+                                   nuevoBoton.class = 'borde2';
+                                   eval('nuevoBoton.onclick= function(){GoToEncuesta(' + data[i].c_disciplina + ')}')
+                                   divContainer.appendChild(nuevoBoton);
+                               }
+                           }
+                           else {
+                               alert('data null');
+
+                           }
+
+
+                       },
+
+                     failure: function (XMLHttpRequest, textStatus, errorThrown) {
+                         alert(textStatus);
+                     }
+
+                 });
+
+
+
+             })
+
+
+
+
+
+
+             function GoToEncuesta(Disciplina) {
+
+//                
+//                 document.getElementById('Plataforma').value = Plataforma;
+//                 document.getElementById('Grado').value = Grado;
+//                 document.getElementById('Disciplina').value = Disciplina;
+                 sessionStorage.setItem("Disciplina", Disciplina);
+
+
+                 var Encuesta_Detalle = {}
+                 Encuesta_Detalle = [] // array que contendrá todos los personajes del usuario
+                 sessionStorage.setItem("Encuesta_Detalle", JSON.stringify(Encuesta_Detalle));
+                 
+
+                 window.setTimeout(document.forms["frmSel"].submit(), 3000);
+             }
+    </script>
+    	
+</body>
+</html>

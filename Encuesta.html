@@ -1,0 +1,340 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <!--bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!--custom css-->
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <!--component-css-->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/fade.js"></script>
+    <script src="js/app.js" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+    <!--script-->
+    <title>Educar</title>
+    <script>
+        function mouseOver(oThis) {
+
+            document.getElementById(oThis.name).style.cssText = "border: 2px solid black; border-image: none; width: 50px; height: 50px; cursor: pointer; background-color: Aqua;"
+        }
+        function mouseOut(oThis) {
+            document.getElementById(oThis.name).style.cssText = "border: 2px solid black; border-image: none; width: 50px; height: 50px; cursor: pointer; background-color: Fuchsia;"
+
+        }
+        function clickIt(oThis) {
+            alert(oThis.name);
+            oThis.style.background = "#000000";
+        }
+</script>
+    <script type="text/javascript" language="javascript">
+        function Siguiente(oThis) {
+         
+            var radios = document.getElementsByName('respuesta');
+            var oRta = 0;
+            for (var i = 0, length = radios.length; i < length; i++) {
+                if (radios[i].checked) {
+                    alert(radios[i].value);
+
+
+
+                    oPregunta_id = radios[i].value.split("|")[0];
+                    oRespuesta_id = radios[i].value.split("|")[1];
+                    oCorrecta = radios[i].value.split("|")[2];
+
+
+                     oRta = radios[i].value;
+                     var Encuesta_Detalle = JSON.parse(sessionStorage.getItem("Encuesta_Detalle"));
+
+                     Encuesta_Detalle.push({ 'EncuestaDetalle_Id': '0', 'Encuesta_Id': '0', 'pregunta_id': oPregunta_id, 'respuesta_id': oRespuesta_id, 'correcta': oCorrecta, 'fecha': null });
+
+                     sessionStorage.setItem("Encuesta_Detalle", JSON.stringify(Encuesta_Detalle));
+
+
+
+                    break;
+                }
+            }
+
+            if (oRta == 0) {
+                alert("Debes Seleccionar una Respuesta");
+                return;
+            }
+     
+//            document.getElementById('DataPreguntaRespuesta').innerHTML = JSON.stringify(oDataPreguntaRespuesta);
+            document.getElementById('id_pregunta').value = oId_pregunta;
+
+
+            if (document.getElementById('Siguiente').value == "F") {
+                document.forms["frmSel"].action = "Fin.html"
+
+                oPlataforma = sessionStorage.getItem("Plataforma");
+                oDisciplina = sessionStorage.getItem("Disciplina");
+                oGrado = sessionStorage.getItem("Grado"); 
+
+                var Encuesta = {}
+                Encuesta = { 'Encuesta_Id ': '0', 'Plataforma_Id': oPlataforma, 'c_grado': oGrado, 'c_disciplina': oDisciplina, 'fecha_inicio': null, 'cantidad_respuestas': '0' };
+                sessionStorage.setItem("Encuesta", JSON.stringify(Encuesta));
+
+
+
+
+            }
+                window.setTimeout(document.forms["frmSel"].submit(), 3000);
+
+           
+        }
+
+        
+
+    </script>
+
+    
+</head>
+<body onload="bodyonload()" id="controles" class="trigo fade">
+    <div id="logodiv" class="fade logo-center">
+        <img width="150" height="30" src="images/act-logo1.png" alt="toepfer" />
+    </div>
+        <div class="menu-container">
+        <ul id="mainMenu" class="main-menu fade">
+        </ul>
+    </div>
+    <!-- LOGO TOEPFER -->
+    <div class="logoToepfer">
+        <img width="150" height="30" src="images/act-logo2.png" alt="Toepfer">
+    </div>
+    <!-- END LOGO TOEPFER -->
+    <!-- Logo Camion -->
+    <div class="subtitulo">
+        <table class="tablelogo">
+            <tr>
+                <td>
+                    <p>
+                        <img width="45" height="30" src="images/camion2.png" alt="Camion" style="margin-right: 5px;" />
+                        Elegi la opcion correcta.
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- END Logo Camion -->
+    <!-- INPUT TEXT -->
+    <div class="formpatente">
+        <form name="frmSel" method="get" action="Encuesta.html" >
+        <input id="Plataforma" name="Plataforma" type="hidden" value="X" />
+        <input id="Grado" name="Grado" type="hidden" value="X" />
+         <input id="id_pregunta" name="id_pregunta" type="hidden" value="0" />
+         <input id="DataPreguntaRespuesta" name="DataPreguntaRespuesta" type="hidden" />
+        <!-- END INPUT TEXT -->
+        <!-- IMAGEN LOADING HIDDEN-->
+        <!--Mostrar y ocultar con Js-->
+        <div class="divimagen" id="divProgress">
+            <img id="imgProgress" class="divloading" src="images/loading7.gif" alt="Cargando..." />
+        </div>
+        <!-- END IMAGEN LOADING HIDDEN -->
+        <!-- BOTON  -->
+       
+        </form>
+        <div id="divContainer"  style="width:700px;text-align :center;margin:0 auto; ">
+            
+        </div>
+       <!-- <label class="estilocartelInfo">
+            <b style="">Elegi la opcion correcta. </b>
+        </label>-->
+        <!-- END BOTON  -->
+    </div>
+    <!-- FOOTER -->
+    <footer id="fh5co-footer" role="contentinfo">
+        <div class="container">
+            <div class="col-md-12 fh5co-copyright text-center navbar-fixed-bottom">
+               <button type="submit" class="borde2" style="width: 100%;" onclick="Siguiente(this)" id="Siguiente" value="S"  >Siguiente</button>
+            </div>
+        </div>
+    </footer>
+    <!-- END FOOTER -->
+    <!-- SCRIPTS SCROLL BAR -->
+    <script src="js/jquery.nicescroll.js"></script>
+    <script src="js/scripts.js"></script>
+    <!-- END SCRIPTS SCROLL BAR -->
+   
+         <script type="text/javascript">
+             var Plataforma;
+             var Grado;
+//             var oDataPreguntaRespuesta;
+             $(document).ready(function () {
+
+                 // oDataPreguntaRespuesta = getQueryVariable('DataPreguntaRespuesta');
+                 oDataPreguntaRespuesta = sessionStorage.getItem("DataPreguntaRespuesta");
+                 if (oDataPreguntaRespuesta != null) {
+                      var data = JSON.parse(oDataPreguntaRespuesta);
+
+                     
+
+                     ShowPregunta(data);
+                     return;
+                 }
+
+//                 Plataforma = getQueryVariable('Plataforma');
+//                 oDisciplinaIn = getQueryVariable('Disciplina');
+//                 oGradoIn = getQueryVariable('Grado');
+
+                 Plataforma = sessionStorage.getItem("Plataforma");
+                 oDisciplinaIn = sessionStorage.getItem("Disciplina");
+                 oGradoIn = sessionStorage.getItem("Grado");
+
+                 document.addEventListener("deviceready", onDeviceReady, false);
+                 //Muestra contenido de la pagina (efecto).
+                 showin("controles");
+
+                 var mydata = {
+                     oDisciplina: oDisciplinaIn,
+                     oGrado: oGradoIn
+                 }
+
+
+                 var ourl = oUrlStart + "pregunta_respuesta_get_by_disciplina_grado_List/oDisciplina=" + oDisciplinaIn + ",oGrado=" + oGradoIn;
+
+                 $.ajax({
+                     url: ourl,
+                     type: "GET",
+                     contentType: "application/json; charset=utf-8",
+                     dataType: "jsonp",
+                     cache: false,
+                     // data: JSON.stringify(mydata),
+                     data: mydata,
+                     success:
+                       function (data, textStatus, XMLHttpRequest) {
+                           sessionStorage.setItem("DataPreguntaRespuesta", JSON.stringify(data));
+                         
+
+                           ShowPregunta(data);
+                           return;
+                       },
+
+                     failure: function (XMLHttpRequest, textStatus, errorThrown) {
+                         alert(textStatus);
+                     }
+
+                 });
+
+
+
+             })
+
+             var oOrden;
+
+             function BuscarProximaPregunta(data,Actual) {
+
+                 for (var i = 0; i < data.length; i++) {
+
+                     if (data[i].id_pregunta > parseInt(Actual)) {
+                         return data[i]
+                         break;
+                     }
+
+
+                 }
+              }
+              function ShowPregunta(data) {
+                  // BUSCO DISTINCT DE PREGUNTAS BEGIN
+                  var distinct = []
+                  var unique = {};
+                  var distinct = [];
+                  for (var i in data) {
+                      if (typeof (unique[data[i].id_pregunta]) == "undefined") {
+                          distinct.push(data[i].id_pregunta);
+                      }
+                      unique[data[i].id_pregunta] = 0;
+                  }
+                  // BUSCO DISTINCT DE PREGUNTAS END
+                 oId_pregunta = getQueryVariable('id_pregunta');
+//                 if (parseInt(oOrden) == false) {
+                 if (IsNumeric(oId_pregunta) == false) {
+                     RegCabecera = BuscarProximaPregunta(data,0);
+                 }
+                 else{
+                     RegCabecera = BuscarProximaPregunta(data, oId_pregunta);
+                 }
+                 oId_pregunta = RegCabecera.id_pregunta;
+             
+                 var oInnerHTML="";
+                 if (data != null) {
+                     var divContainer = document.getElementById('divContainer');
+                     //                               document.getElementById("demo").innerHTML =
+
+
+                     //ProgressBar Begin//////////////////////////////////////////////////////
+                     oInnerHTML = oInnerHTML + "<table align=center style='width: 70%; '><tr>"
+                     for (var i = 0; i < distinct.length; i++) {
+                         if (distinct[i] <= oId_pregunta)
+                                oInnerHTML = oInnerHTML + "<td style='height:10px;background-color:Blue; border: 2px solid black;'></td>";
+                             else
+                                 oInnerHTML = oInnerHTML + "<td style='height:10px;background-color:White; border: 2px solid black;'></td>";
+                                 
+                     }
+                     oInnerHTML = oInnerHTML + " </tr></table>";
+                     //ProgressBar End//////////////////////////////////////////////////////
+
+
+
+
+                     oInnerHTML = oInnerHTML + "<table align=center style='width: 70%; '>"
+                     oInnerHTML = oInnerHTML + "<hr style=\"margin: 30pt 0pt 0pt;\">" +
+                                 "<p style=\"margin: 0pt 100pt 10pt; text-align: justify; line-height: normal;\">" +
+                                 "<i>" +
+                                 RegCabecera.enunciado_cabecera +
+                                 "<\/i><\/p>" +
+                                "<hr>";
+
+
+                     var contador = 0;
+
+                    
+                     for (var i = 0; i < data.length; i++) {
+
+                         if (data[i].id_pregunta != RegCabecera.id_pregunta)
+                             continue;
+
+                         oInnerHTML = oInnerHTML + "<tr>"
+
+                         oInnerHTML = oInnerHTML + "<td><button type='button' width= '30' height= '30' class='button buttonOption' ; onclick='clickIt(this)'; value='' id=" + data[i].id_respuesta + "  name=" + data[i].id_respuesta + "></button></td>";
+
+                         oInnerHTML = oInnerHTML + "<td><input type='radio' id=" + data[i].id_respuesta + " name='respuesta' value=" + data[i].id_pregunta + "|" + data[i].id_respuesta + "|" + data[i].correcto + " > &nbsp;" + data[i].enunciado +"</td>";
+                         if (data[i].imagen != null)
+                             oInnerHTML = oInnerHTML + "<td>&nbsp;<img alt='' width= '100' src=" + data[i].imagen + " /></td> "
+
+                         oInnerHTML = oInnerHTML + "<input id=correcto" + data[i].id_respuesta + " type='hidden' value=" + data[i].correcto + "/>"
+
+                         oInnerHTML = oInnerHTML + "</tr>"
+
+
+
+                     }
+
+                      oInnerHTML = oInnerHTML + " </table>";
+                      
+                 }
+                 else {
+                     alert('No hay encuestas para esta Disciplina/Grado');
+                     document.forms["frmSel"].action = "index.html"
+                     window.setTimeout(document.forms["frmSel"].submit(), 5000);
+
+                 }
+
+                 divContainer.innerHTML = oInnerHTML;
+
+
+                 if(data[data.length-1].id_pregunta ==oId_pregunta) {
+                     document.getElementById('Siguiente').innerText = "Finalizar";
+                     document.getElementById('Siguiente').value = "F";
+                 }
+             }
+
+
+            
+    </script>
+    	
+</body>
+</html>

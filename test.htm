@@ -1,0 +1,212 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <!--bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!--custom css-->
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <!--component-css-->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/fade.js"></script>
+     <script src="js/app.js" type="text/javascript" ></script>
+     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+    <!--script-->
+    <title> Educar</title>
+
+   
+<script type="text/javascript" language="javascript">
+    function PedirCupo(oCodigoIn, oPatenteIn) {
+
+        var puertocod = 0;
+        oCodigoIn = oCodigoIn.toUpperCase();
+        oPatenteIn = oPatenteIn.toUpperCase();
+        //   oPatenteIn = oPatenteIn.toUpperCase();
+         
+        show("imgProgress");
+
+        //   alert(oMovileIn);
+        // Add the page method call as an onclick handler for the div.
+        var mydata = {
+            data: '10',
+            data2: 'caca',
+              data2: 'caca'
+        }
+
+
+        var ourl = oUrlStart + "Version";
+      
+       
+        $.ajax({
+            url: ourl,
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            dataType: "jsonp",
+            async: false,
+            cache: false,
+            //data: "{}",
+            //data: "{ oCodigo: " + oCodigoIn + " }",
+            // data: JSON.stringify(mydata),
+            // data: mydata,
+            success:
+                               function (data, textStatus, XMLHttpRequest) {
+
+                                   hide("imgProgress");
+                                   /* Vemos que la respuesta no este vacÃ­a y sea una arreglo */
+                                   if (data.d == '') {
+                                       alert('Los datos ingresados no son validos.');
+                                       return;
+
+                                   }
+                                   // if(data != null && $.isArray(data)){
+                                   if (data != null) {
+                                       //var json = $.parseJSON(data.d);
+                                       //var json = JSON.parse(data.d);
+                                       alert("Version:" + data);
+
+                                       if (json.FECHACUPO == 0) {
+                                           alert('El cupo esta Vencido.');
+                                           return;
+                                       }
+
+                                       if (json.PATENTE.trim() != oPatenteIn.trim()) {
+                                           alert('El cupo esta asignado a otra patente.');
+                                           return;
+                                       }
+
+
+
+
+                                       // alert("typeof (Storage) :" + typeof (Storage));
+                                       if (typeof (Storage) !== "undefined") {
+                                           //alert("!==  : 1");
+                                           localStorage.setItem("CODIGOCUPO", json.CODIGOCUPO);
+                                           localStorage.setItem("FECHACUPO", json.FECHACUPO);
+
+                                           localStorage.setItem("PATENTE", json.PATENTE);
+                                           localStorage.setItem("MOVIL", json.MOVIL);
+                                           localStorage.setItem("PRODUCTO", json.DSPRODUCTO);
+
+                                           //alert("!==  : 2");
+
+                                           //window.setTimeout(function () { window.location = "LiberarCupo.html"; }, 3000);
+                                           window.location = "LiberarCupo.html";
+                                       } else {
+                                           alert('Sorry! No Web Storage support..!');
+                                       }
+                                   }
+                                   else {
+                                       alert('data null');
+                                   }
+
+
+                               },
+
+            failure: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(textStatus);
+                hide("imgProgress");
+            },
+                   error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Status : " + textStatus + "Retorno : " + jqXHR.getResponseHeader('Content-Type'));
+                    hide("imgProgress");
+                }
+
+        });
+        // hide("myImage");
+    }
+
+
+
+
+
+
+
+
+         
+
+    </script>
+
+</head>
+<body onload="bodyonload()" id="controles" class="trigo fade">
+
+     <input id="Radio1" type="radio" value="xxxxxxxxxx" name="xxxxxxxxxx"  />  
+    <img alt="" width= "100" src="http://cdn3.computerhoy.com/sites/computerhoy.com/files/styles/fullcontent/public/novedades/oficina_google_0.jpg" />   <br>
+
+     <input id="Radio2" type="radio" ="xxxxxxxxxx" name="xxxxxxxxxx"   /><br>
+     <input id="Radio3" type="radio" /><br>
+
+                 <!-- LOGO TOEPFER -->
+                <div class="logoToepfer">
+                    <img width="150" height="30" src="images/act-logo2.png" alt="Toepfer">
+                </div>
+                  <!-- END LOGO TOEPFER -->
+                 <!-- Logo Camion -->
+                <div class="subtitulo">
+                    <table class="tablelogo">
+                        <tr>
+                            <td>
+                                <p>
+                                    <img width="45" height="30" src="images/camion2.png" alt="Camion" style="margin-right:5px;" />Registro de Cupos
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- END Logo Camion -->
+                 <!-- INPUT TEXT -->
+    <div class="formpatente">
+     <form name="frmSel" method="post" autocomplete="off">
+        <div>
+           
+                <div>
+                    <input class="radiustop" type="text" maxlength="11" value="" id="txtCupo" name="txtCupo" required="" placeholder="C&oacute;digo de Cupo" />
+                </div>
+                <div>
+                    <input class="radiusbottom" type="text" maxlength="10" value="" id="txtPatente" name="txtPatente" required="" placeholder="Patente" />
+                </div>
+         
+        </div>
+        <!-- END INPUT TEXT -->
+        <!-- IMAGEN LOADING HIDDEN-->  <!--Mostrar y ocultar con Js-->
+        <div class="divimagen" id="divProgress">
+            <img id="imgProgress" class="divloading"  src="images/loading7.gif" alt="Cargando..."/>
+        </div>
+        <!-- END IMAGEN LOADING HIDDEN -->
+        <!-- BOTON  -->
+        <div style="text-align:center;width:100%;" >
+            <div style="float:left;width:50%;">
+                <button type="button" class="borde2" style="width: 80%;" id="btnSalir" onclick="ExitApp()" value="Salir">SALIR</button>
+               
+            </div>
+            <div style="float: right; width: 50%;">
+                <button type="button" class="borde2" style="width:80%;" onclick="PedirCupo(txtCupo.value,txtPatente.value)" value="REGISTRAR">REGISTRAR</button>
+            </div>
+        </div>
+         </form>
+        <label class="estilocartelInfo">
+        <b style="">
+            Sr. Transportista
+            VERIFIQUE que la PATENTE de la carta de porte COINCIDA con la PATENTE del CHASIS.
+        </b>
+</label>
+        <!-- END BOTON  -->
+       
+    </div>
+    
+    <!-- FOOTER -->
+    <footer id="fh5co-footer" role="contentinfo">
+        <div class="container">
+            <div class="col-md-12 fh5co-copyright text-center navbar-fixed-bottom">
+                <b class ="stilofooter">Copyright 2016 Alfred C. Toepfer Internatinal S.R.L.</b>
+            </div>
+        </div>
+    </footer>
+    <!-- END FOOTER -->
+    <!-- SCRIPTS SCROLL BAR -->
+    <script src="js/jquery.nicescroll.js"></script>
+    <script src="js/scripts.js"></script>
+    <!-- END SCRIPTS SCROLL BAR -->
+</body>
+</html>
