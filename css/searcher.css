@@ -13,14 +13,14 @@
 #searchfilter input[type="submit"]		{ height:auto; clear:both; background:#555 !important; margin:20px auto 3px auto !important; padding:5px 25px; color:#fff; font-size:14px; border:none !important; cursor:pointer; }
 #searchfilter .half			{ width:30% !important; }
 #searchfilter .wnone		{ width:23% !important; }
-#searchfilter button{ width:90%; margin-left:12px!important;  height:auto;  background:#8b8b8b !important;   padding:5px 25px; color:#fff; font-size:14px;  border:none; cursor:pointer; }
+#searchfilter button{ width:90%; margin-left:11px!important;border-radius:5px;  height:auto;  background:#8b8b8b !important;   padding:8px 25px; color:#fff; font-size:18px;  border:none; cursor:pointer; }
 .btnaction 					{ width:100%; float:left; clear:both; margin:0px auto; text-align:center;  }
 .btnaction input			{ width:auto !important; }
 /* ===================================RESPONSIVE=================================== */
 @media all and (max-device-width :1280px) {
     #searchfilter button {
         width: 90%;
-        margin-left: 13px !important;
+        margin-left: 10px;
         margin-bottom: 3px !important;
         background: #55!important;
         padding: 9px;
@@ -29,6 +29,12 @@
         border: none;
         cursor: pointer;
         border-radius: 5px;
+        margin-left: 20px
     }
 }
+/*@media (min-device-width:769px) and (max-device-width:1024px) {
+    .control-center {
+        margin-top: 8em;
+    }
+}*/
 

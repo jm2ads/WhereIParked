@@ -60,6 +60,7 @@
             border:none;
             border-radius:5px;
             text-transform : uppercase; 
+            margin-left:10px;
            
 				}
 				
@@ -115,21 +116,19 @@ input:-ms-input-placeholder {
 	.control-center {				
 			width: 260px;
 			height: auto;
-			margin: auto;
-			padding-top: 4%;
-			left: 0; right: 0; 	
 			position: absolute;
             padding-top: 25px;
-			left: 0; right: 0;
 			position: absolute;			
-			margin-top:1em;
 			margin-bottom:10px;
             background-color:rgb(216,216,216); 
             border-radius:5px;
             -moz-border-radius: 5px;
             -webkit-border-radius:5px;
             box-shadow:inset 0px 0px 0px #555, 0px 0px 10px #555;
- 
+             left: 50%;
+            top: 50%;
+             transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
   		
 		}
     .control-liberarcupos {				
@@ -140,16 +139,17 @@ input:-ms-input-placeholder {
 			left: 0; right: 0; 	
 			position: absolute;
             padding-top: 25px;
-			left: 0; right: 0;
-			position: absolute;			
-			margin-top:1em!important;
 			margin-bottom:10px;
             background-color:rgb(216,216,216); 
             border-radius:5px;
             -moz-border-radius: 5px;
             -webkit-border-radius:5px;
             box-shadow:inset 0px 0px 0px #555, 0px 0px 10px #555;
-            margin:0 auto;
+             left: 50%;
+            top: 50%;
+             transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+
   		
 		}
     #searchfilterLiberar{
@@ -166,7 +166,7 @@ input:-ms-input-placeholder {
 left:0;
 right:0;
 width:90%!important;
-margin-left:13px!important;
+margin-left:25px;
 height:10px;
 
 position:absolute;
@@ -180,11 +180,72 @@ margin-bottom:20px!important;
    padding-bottom:20px;
 
 }
-@media screen and (min-device-width: 240px) and (orientation: landscape) {
+
+
+/*@media screen and (max-device-height:610px)  {
+
+ 
+      .control-liberarcupos{
+          margin-top:5em!important;
+}*/
+/*@media screen and (max-device-height: 640px)  {
 .control-center{
-margin-top:1em;
+margin-top:7em;
+}
+
+}*/
+/*@media screen and  (min-heigth:480px) {
+    
+}
+}*/
+
+@media screen and (min-width:500px){
+  .control-center{
+      width:500px;
+      
+      height:515px;
+}
+  .input-cupo{
+      font-size:23px!important;
+      vertical-align:middle;
+      height:3em;
+      margin-bottom:43px;
+      margin-left:20px!important;
+      
+  }
+  #searchfilter button{
+      font-size:28px;
+      padding: 19px 25px;
+      border-radius: 5px;
+      margin-left:20px!important;
+  }
+  .control-liberarcupos{
+      width:500px;
+      
+    
+  }
+  #searchfilterLiberar{
+      margin-left: 50px !important;
+  }
+  .divloading img {
+
+margin-left:25px!important;
+
+
+}
+.li-titulo {
+    padding-left: 5px;
+    padding-bottom: 39px;
+    text-align: center;
+    font-size: 1.5em !important;
+}
+.li-valor {
+   
+    font-size: 33px;
 }
 }
+
+
 	.resumen-center {		
 			width: 250px;
 			margin: auto;
@@ -192,7 +253,6 @@ margin-top:1em;
 			left: 0; right: 0;
 			position: absolute;			
 			height:203px;
-				
 			margin-top:4em;
 			background-color:#d8d8d8;
 			margin-bottom:10px;
@@ -208,7 +268,7 @@ margin-top:1em;
 			font-size:1em;
 			text-decoration:none;
 			list-style:none;
-			height: 2em;
+			height: 3.4em;
 			font-size: 1em;
 			margin-left:2px!important;
             width:90%;
@@ -226,9 +286,9 @@ margin-top:1em;
 left:0;
 right:0;
 width:90%!important;
-margin-left:13px!important;
+margin-left:13px;
 height:10px;
-margin-top:40px;
+margin-top:45px;
 position:absolute;
 width:50%;
 margin-bottom:5px;
@@ -255,10 +315,10 @@ margin-bottom:5px;
     width:80%;
     font-family:Verdana,Arial;
     background-color:#8d8d8d;
-    font-size:1.5em;
+    font-size:18px;
     margin-left:25px;
     margin-top:15px;
-    height:53px;
+   
 
 }
 #searchfilterLiberar button{
@@ -267,7 +327,11 @@ margin-bottom:5px;
     font-family:Verdana,Arial;
     margin-bottom:60px;
 }
-		
+@media screen and  (max-height: 480px){
+    .divliberarloading img {
+       margin-left:13px;
+    }
+}	
 
 /* index STILOS */
 

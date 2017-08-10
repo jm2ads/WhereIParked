@@ -22,15 +22,34 @@ tr.link:hover {
 }
 BODY
 {
-    SCROLLBAR-ARROW-COLOR: #fffbf0;
-    SCROLLBAR-FACE-COLOR: #517b4a;
-    BACKGROUND-COLOR: #fffaf0;
+    SCROLLBAR-ARROW-COLOR:black;
+    SCROLLBAR-FACE-COLOR:#2e6b4d;
+    BACKGROUND-COLOR: #555;
     SCROLLBAR-DARKSHADOW-COLOR: #666666;
     SCROLLBAR-HIGHLIGHT-COLOR: #fffaf0;
-    SCROLLBAR-SHADOW-COLOR: #fffaf0;
-    SCROLLBAR-TRACK-COLOR: #eee8aa;
+    SCROLLBAR-SHADOW-COLOR:rgba(0, 102, 0, 1);
+    SCROLLBAR-TRACK-COLOR:lightgray;
     SCROLLBAR-3DLIGHT-COLOR: #666666
+
 }
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #D62929;
+}
+ 
 BODY.print
 {
     SCROLLBAR-ARROW-COLOR: #fffbf0;
